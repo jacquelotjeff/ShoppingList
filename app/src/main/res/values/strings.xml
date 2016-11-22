@@ -5,6 +5,7 @@
 
     <!-- Link / Menu strings -->
     <string name="link_subscribe">Je m\'inscris</string>
+    <string name="link_login">Connexion</string>
 
     <!-- Form -->
     <string name="form_user_last_name">Nom</string>
@@ -14,5 +15,8 @@
 
     <!-- Common -->
     <string name="common_submit">Valider</string>
+
+    <string name="permission_internet">L\'application Shopping List a besoin d\'une connnexion internet.</string>
+    <string name="permission_network_state">L\'application Shopping List a besoin de vérifier l\'état de votre connexion.</string>
 
 </resources>
