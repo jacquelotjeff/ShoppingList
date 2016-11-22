@@ -4,7 +4,7 @@
     <string name="app_welcome">Bienvenue sur Shopping List !</string>
 
     <!-- Link / Menu strings -->
-    <string name="link_subscribe">Je m'inscris</string>
+    <string name="link_subscribe">Je m\'inscris</string>
 
     <!-- Form -->
     <string name="form_user_last_name">Nom</string>
