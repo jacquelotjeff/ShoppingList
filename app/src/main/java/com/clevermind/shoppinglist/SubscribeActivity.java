@@ -1,22 +1,20 @@
 package com.clevermind.shoppinglist;
 
-
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Button;
 import android.view.View;
+import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+public class SubscribeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_subscribe_activity);
 
-        // Goto subscribe activity
-        Button btnLinkSubscribe = (Button) findViewById(R.id.btnLinkSubscribe);
+        // Submit subscription.
+        Button btnLinkSubscribe = (Button) findViewById(R.id.btnSubmit);
         btnLinkSubscribe.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -27,6 +25,5 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
     }
 }
