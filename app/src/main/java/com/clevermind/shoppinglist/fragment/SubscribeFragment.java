@@ -1,10 +1,13 @@
 package com.clevermind.shoppinglist.fragment;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +17,17 @@ import android.widget.Toast;
 
 import com.clevermind.shoppinglist.R;
 import com.clevermind.shoppinglist.asynctask.RestTask;
+import com.clevermind.shoppinglist.utils.ApiRequest;
+import com.clevermind.shoppinglist.utils.ApiResponse;
 import com.clevermind.shoppinglist.utils.Connectivity;
+import com.clevermind.shoppinglist.utils.ErrorFormatter;
 import com.clevermind.shoppinglist.utils.HttpRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -82,22 +90,43 @@ public class SubscribeFragment extends Fragment {
                     params.put("password", txtBoxMail.getText().toString());
                     params.put("email", txtBoxPassword.getText().toString());
 
-
                     RestTask restTask = new RestTask(new RestTask.RestTaskListener() {
                         @Override
-                        public void onRestTaskCompleted(String response) {
+                        public void onRestTaskCompleted(String json) {
 
-                            Toast toast = Toast.makeText(getActivity(), response, Toast.LENGTH_LONG);
+                            String message = "";
+
+                            ApiResponse response = new ApiResponse(json);
+
+                            switch (response.getResultCode()) {
+
+                                case ApiResponse.CODE_OK:
+                                    message = getResources().getString(R.string.message_subcribed_success);
+                                    break;
+                                case ApiResponse.CODE_EMAIL_ALREADY_REGISTERED:
+                                    message = getResources().getString(R.string.message_subcribed_mail_already_registered);
+                                    break;
+                                default:
+                                    message = ErrorFormatter.formatError(getActivity(), response.getResultCode());
+                                    break;
+
+                            }
+
+                            FragmentTransaction ft = getFragmentManager().beginTransaction();
+                            Fragment mainFragment = new MainFragment();
+                            ft.replace(R.id.layoutContainer, mainFragment);
+                            ft.commit();
+
+                            Toast toast = Toast.makeText(getActivity(), message, Toast.LENGTH_LONG);
                             toast.show();
-
                         }
                     });
 
-                    restTask.execute(HttpRequest.append("http://appspaces.fr/esgi/shopping_list/account/subscribe.php", params));
+                    restTask.execute(ApiRequest.subscribe(params));
 
                 } else {
 
-                    Toast toast = Toast.makeText(getActivity(), "Vous ne semblez pas être connecté à internet.", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getActivity(), getResources().getString(R.string.message_app_no_internet), Toast.LENGTH_LONG);
                     toast.show();
 
                 }

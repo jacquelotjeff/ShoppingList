@@ -61,12 +61,11 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
                 Fragment subscribeFragment = new SubscribeFragment();
-                fragmentTransaction.replace(R.id.layoutContainer, subscribeFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                ft.replace(R.id.layoutContainer, subscribeFragment);
+                ft.addToBackStack(null);
+                ft.commit();
 
             }
         });
