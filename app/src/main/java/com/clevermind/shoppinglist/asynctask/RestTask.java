@@ -12,7 +12,7 @@ public class RestTask extends AsyncTask<String, Void, String>{
 
     RestTaskListener listener;
 
-    public RestTask(RestTaskListener listener){
+    public RestTask(RestTaskListener listener) {
         this.listener = listener;
     }
 

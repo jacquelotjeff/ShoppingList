@@ -3,19 +3,17 @@ package com.clevermind.shoppinglist;
 
 import android.Manifest;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.clevermind.shoppinglist.fragment.MainFragment;
+import com.clevermind.shoppinglist.fragment.LoginFragment;
 import com.clevermind.shoppinglist.fragment.SubscribeFragment;
 
-public class MainActivity extends AppCompatActivity implements MainFragment.OnFragmentInteractionListener, SubscribeFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements SubscribeFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,19 +64,29 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
 
         if (permissionsVerified) {
 
-            //Main fragment
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            Fragment mainFragment = new MainFragment();
-            fragmentTransaction.replace(R.id.layoutContainer, mainFragment);
-            fragmentTransaction.commit();
+            // By default add the login fragment
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            Fragment loginFragment = new LoginFragment();
+            ft.replace(R.id.layoutContainer, loginFragment);
+            ft.addToBackStack(null);
+            ft.commit();
 
         }
 
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onFragmentInteraction() {
 
+    }
+
+    @Override
+    public void onClickRegistrationButton() {
+        // By default add the login fragment
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment subscribeFragment = new SubscribeFragment();
+        ft.replace(R.id.layoutContainer, subscribeFragment);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 }
