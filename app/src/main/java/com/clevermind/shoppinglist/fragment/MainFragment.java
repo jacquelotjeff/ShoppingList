@@ -10,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.clevermind.shoppinglist.R;
+import com.clevermind.shoppinglist.utils.Connectivity;
 
 
 /**
@@ -54,21 +56,31 @@ public class MainFragment extends Fragment {
 
         View mainView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        // Subscribe fragment
-        Button btnLinkSubscribe =  (Button) mainView.findViewById(R.id.btnLinkSubscribe);
-        btnLinkSubscribe.setOnClickListener(new View.OnClickListener(){
+        //TODO Check if it works
+        if (Connectivity.isConnected(mainView.getContext())) {
 
-            @Override
-            public void onClick(View view) {
+            // Subscribe fragment
+            Button btnLinkSubscribe =  (Button) mainView.findViewById(R.id.btnLinkSubscribe);
+            btnLinkSubscribe.setOnClickListener(new View.OnClickListener(){
 
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                Fragment subscribeFragment = new SubscribeFragment();
-                ft.replace(R.id.layoutContainer, subscribeFragment);
-                ft.addToBackStack(null);
-                ft.commit();
+                @Override
+                public void onClick(View view) {
 
-            }
-        });
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    Fragment subscribeFragment = new SubscribeFragment();
+                    ft.replace(R.id.layoutContainer, subscribeFragment);
+                    ft.addToBackStack(null);
+                    ft.commit();
+
+                }
+            });
+
+        } else {
+
+            Toast toast = Toast.makeText(getActivity(), getResources().getString(R.string.message_app_no_internet), Toast.LENGTH_LONG);
+            toast.show();
+
+        }
 
         //TODO Login fragment
 

@@ -3,6 +3,7 @@ package com.clevermind.shoppinglist.fragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.nfc.Tag;
 import android.os.AsyncTask;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.clevermind.shoppinglist.R;
 import com.clevermind.shoppinglist.asynctask.RestTask;
+import com.clevermind.shoppinglist.model.User;
 import com.clevermind.shoppinglist.utils.ApiRequest;
 import com.clevermind.shoppinglist.utils.ApiResponse;
 import com.clevermind.shoppinglist.utils.Connectivity;
@@ -76,60 +78,67 @@ public class SubscribeFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                if (Connectivity.isConnected(view.getContext())) {
+            EditText txtBoxLastname = (EditText) getView().findViewById(R.id.txtBoxLastname);
+            EditText txtBoxFirstname = (EditText) getView().findViewById(R.id.txtBoxFirstname);
+            EditText txtBoxMail = (EditText) getView().findViewById(R.id.txtBoxMail);
+            EditText txtBoxPassword = (EditText) getView().findViewById(R.id.txtBoxPassword);
 
-                    Map<String, String> params = new HashMap<String, String>();
+            final User user = new User();
 
-                    EditText txtBoxLastname = (EditText) getView().findViewById(R.id.txtBoxLastname);
-                    EditText txtBoxFirstname = (EditText) getView().findViewById(R.id.txtBoxFirstname);
-                    EditText txtBoxMail = (EditText) getView().findViewById(R.id.txtBoxMail);
-                    EditText txtBoxPassword = (EditText) getView().findViewById(R.id.txtBoxPassword);
+            user.setFirstname(txtBoxFirstname.getText().toString());
+            user.setLastname(txtBoxLastname.getText().toString());
+            user.setEmail(txtBoxMail.getText().toString());
+            user.setPassword(txtBoxPassword.getText().toString());
 
-                    params.put("lastname", txtBoxLastname.getText().toString());
-                    params.put("firstname", txtBoxFirstname.getText().toString());
-                    params.put("password", txtBoxMail.getText().toString());
-                    params.put("email", txtBoxPassword.getText().toString());
+            RestTask restTask = new RestTask(new RestTask.RestTaskListener() {
+                @Override
+                public void onRestTaskCompleted(String json) {
 
-                    RestTask restTask = new RestTask(new RestTask.RestTaskListener() {
-                        @Override
-                        public void onRestTaskCompleted(String json) {
+                    String message = "";
 
-                            String message = "";
+                    ApiResponse response = new ApiResponse(json);
 
-                            ApiResponse response = new ApiResponse(json);
+                    switch (response.getResultCode()) {
 
-                            switch (response.getResultCode()) {
+                        case ApiResponse.CODE_OK:
 
-                                case ApiResponse.CODE_OK:
-                                    message = getResources().getString(R.string.message_subcribed_success);
-                                    break;
-                                case ApiResponse.CODE_EMAIL_ALREADY_REGISTERED:
-                                    message = getResources().getString(R.string.message_subcribed_mail_already_registered);
-                                    break;
-                                default:
-                                    message = ErrorFormatter.formatError(getActivity(), response.getResultCode());
-                                    break;
+                            message = getResources().getString(R.string.message_subcribed_success);
 
-                            }
-
+                            /*
+                            //TODO Call MainFragment (Auto)
+                            Bundle bundle = new Bundle();
+                            bundle.putString("email", user.getEmail());
+                            bundle.putString("password", user.getPassword());
                             FragmentTransaction ft = getFragmentManager().beginTransaction();
-                            Fragment mainFragment = new MainFragment();
-                            ft.replace(R.id.layoutContainer, mainFragment);
+
+                            //TODO Replace by MainFragment
+                            Fragment subscribeFragment = new SubscribeFragment();
+                            subscribeFragment.setArguments(bundle);
+                            ft.replace(R.id.layoutContainer, subscribeFragment);
                             ft.commit();
+                            */
 
-                            Toast toast = Toast.makeText(getActivity(), message, Toast.LENGTH_LONG);
-                            toast.show();
-                        }
-                    });
+                            break;
+                        case ApiResponse.CODE_EMAIL_ALREADY_REGISTERED:
+                            message = getResources().getString(R.string.message_subcribed_mail_already_registered);
+                            break;
+                        default:
+                            message = ErrorFormatter.formatError(getActivity(), response.getResultCode());
+                            break;
 
-                    restTask.execute(ApiRequest.subscribe(params));
+                    }
 
-                } else {
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    Fragment mainFragment = new MainFragment();
+                    ft.replace(R.id.layoutContainer, mainFragment);
+                    ft.commit();
 
-                    Toast toast = Toast.makeText(getActivity(), getResources().getString(R.string.message_app_no_internet), Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getActivity(), message, Toast.LENGTH_LONG);
                     toast.show();
-
                 }
+            });
+
+            restTask.execute(ApiRequest.subscribe(user));
 
 
             }
