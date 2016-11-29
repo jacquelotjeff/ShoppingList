@@ -60,6 +60,7 @@ public class LoginFragment extends Fragment {
             }
 
         });
+
         btnLinkLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,14 +107,6 @@ public class LoginFragment extends Fragment {
         return loginView;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed() {
-        Log.d("test", "test");
-        if (mListener != null) {
-            mListener.onFragmentInteraction();
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -137,7 +130,6 @@ public class LoginFragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction();
-
         void onClickRegistrationButton();
     }
 }

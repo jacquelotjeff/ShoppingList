@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.clevermind.shoppinglist.R;
@@ -26,12 +27,6 @@ public class SubscribeFragment extends Fragment {
     public SubscribeFragment() {
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment SubscribeFragment.
-     */
     public static SubscribeFragment newInstance(String param1, String param2) {
         SubscribeFragment fragment = new SubscribeFragment();
         Bundle args = new Bundle();
@@ -51,6 +46,16 @@ public class SubscribeFragment extends Fragment {
 
         //On submit
         Button btnLinkSubscribe =  (Button) subscribeView.findViewById(R.id.btnSubmit);
+        TextView txtLogin = (TextView) subscribeView.findViewById(R.id.txtLinkLogin);
+
+        txtLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OnClickLoginButton();
+            }
+
+        });
+
         btnLinkSubscribe.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -118,12 +123,6 @@ public class SubscribeFragment extends Fragment {
         return subscribeView;
     }
 
-    public void onButtonPressed() {
-        if (mListener != null) {
-            mListener.onFragmentInteraction();
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -141,7 +140,13 @@ public class SubscribeFragment extends Fragment {
         mListener = null;
     }
 
+    public void OnClickLoginButton() {
+        mListener.onClickLoginButton();
+    }
+
+
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction();
+        void onClickLoginButton();
     }
 }

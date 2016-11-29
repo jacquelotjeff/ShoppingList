@@ -81,6 +81,16 @@ public class MainActivity extends AppCompatActivity implements SubscribeFragment
     }
 
     @Override
+    public void onClickLoginButton() {
+        // By default add the login fragment
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment loginFragment = new LoginFragment();
+        ft.replace(R.id.layoutContainer, loginFragment);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
+    @Override
     public void onClickRegistrationButton() {
         // By default add the login fragment
         FragmentTransaction ft = getFragmentManager().beginTransaction();

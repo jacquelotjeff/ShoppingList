@@ -83,7 +83,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/link_login"
             android:textColor="@color/colorSecondary"
-            android:id="@+id/txtLinkSubscribe" />
+            android:id="@+id/txtLinkLogin" />
     </LinearLayout>
 
 </FrameLayout>
