@@ -10,8 +10,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.clevermind.shoppinglist.fragment.LoginFragment;
-import com.clevermind.shoppinglist.fragment.SubscribeFragment;
+import com.clevermind.shoppinglist.fragments.LoginFragment;
+import com.clevermind.shoppinglist.fragments.SubscribeFragment;
 
 public class MainActivity extends AppCompatActivity implements SubscribeFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener {
 

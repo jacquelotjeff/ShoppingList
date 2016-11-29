@@ -23,7 +23,7 @@
     <string name="permission_network_state">L\'application Shopping List a besoin de vérifier l\'état de votre connexion.</string>
 
     <!-- Messages -->
-    <string name="message_subcribed_success">Vous êtes bien inscrit.</string>
+    <string name="message_subcribed_success">Vous êtes maintenant inscrit.</string>
     <string name="message_subcribed_mail_already_registered">Cet e-mail est déjà enregistré.</string>
     <string name="message_app_error_occured">Une erreur est survenue (Code = %s)</string>
     <string name="message_app_no_internet">Vous ne semblez pas être connecté à internet.</string>
