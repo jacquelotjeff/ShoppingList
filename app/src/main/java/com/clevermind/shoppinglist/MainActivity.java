@@ -3,12 +3,15 @@ package com.clevermind.shoppinglist;
 
 import android.Manifest;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.clevermind.shoppinglist.fragments.LoginFragment;
 import com.clevermind.shoppinglist.fragments.SubscribeFragment;
@@ -68,9 +71,17 @@ public class MainActivity extends AppCompatActivity implements SubscribeFragment
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             Fragment loginFragment = new LoginFragment();
             ft.replace(R.id.layoutContainer, loginFragment);
-            ft.addToBackStack(null);
             ft.commit();
 
+        }
+
+        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", "");
+
+        if (token != "") {
+            Toast.makeText(this, "Vous êtes connecté!", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Veuillez vous connecter!", Toast.LENGTH_LONG).show();
         }
 
     }
@@ -83,10 +94,12 @@ public class MainActivity extends AppCompatActivity implements SubscribeFragment
     @Override
     public void onClickLoginButton() {
         // By default add the login fragment
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
         Fragment loginFragment = new LoginFragment();
         ft.replace(R.id.layoutContainer, loginFragment);
-        ft.addToBackStack(null);
+        //On login fragment clear back stack.
+        fm.popBackStack();
         ft.commit();
     }
 
