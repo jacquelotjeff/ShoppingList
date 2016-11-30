@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.clevermind.shoppinglist.R;
 import com.clevermind.shoppinglist.managers.ApiTask;
+import com.clevermind.shoppinglist.managers.UserManager;
 import com.clevermind.shoppinglist.models.User;
 import com.clevermind.shoppinglist.managers.ApiResponse;
 import com.clevermind.shoppinglist.network.ApiConst;
@@ -123,6 +124,11 @@ public class SubscribeFragment extends Fragment implements ApiTask.IApiTask {
         String message = "";
         switch (response.getResultCode()) {
             case ApiConst.CODE_OK:
+
+                UserManager userManager = new UserManager();
+                User user = userManager.createFromResult(response.getResult());
+                userManager.logUser(user, this.getActivity());
+
                 message = getResources().getString(R.string.message_subcribed_success);
                 Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
                 OnClickLoginButton();

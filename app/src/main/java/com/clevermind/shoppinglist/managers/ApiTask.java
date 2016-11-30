@@ -26,7 +26,7 @@ public class ApiTask extends AsyncTask<Request, Void, ApiResponse> {
             Request request = requests[0];
             String uri = HttpRequest.append(request.getUrl(), request.getParams());
             String result = "";
-            Log.d("tata", uri);
+
             if (request.getMethod() == Request.METHOD_GET) {
                 result = HttpRequest.get(uri).body();
             } else {
