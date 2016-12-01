@@ -21,13 +21,12 @@ public class ApiTask extends AsyncTask<Request, Void, ApiResponse> {
     protected ApiResponse doInBackground(Request... requests) {
         try {
             Request request = requests[0];
-            String uri = HttpRequest.append(request.getUrl(), request.getParams());
             String result = "";
 
             if (request.getMethod() == Request.METHOD_GET) {
-                result = HttpRequest.get(uri).body();
+                result = HttpRequest.get(request.getUrl(), request.getParams(), true).body();
             } else {
-                result = HttpRequest.post(uri).body();
+                result = HttpRequest.post(request.getUrl(), request.getParams(), true).body();
             }
 
             return new ApiResponse(result);
