@@ -1,4 +1,4 @@
-package com.clevermind.shoppinglist.model;
+package com.clevermind.shoppinglist.models;
 
 import java.util.Date;
 
@@ -15,6 +15,12 @@ public class ShoppingList {
     private Date createdDate;
 
     private Boolean completed;
+
+    public ShoppingList(String name){
+
+        this.name = name;
+
+    }
 
 
     public Integer getId() {

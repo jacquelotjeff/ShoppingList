@@ -13,10 +13,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.clevermind.shoppinglist.R;
-import com.clevermind.shoppinglist.managers.ApiTask;
+import com.clevermind.shoppinglist.network.ApiTask;
 import com.clevermind.shoppinglist.managers.UserManager;
 import com.clevermind.shoppinglist.models.User;
-import com.clevermind.shoppinglist.managers.ApiResponse;
+import com.clevermind.shoppinglist.network.ApiResponse;
 import com.clevermind.shoppinglist.network.ApiConst;
 import com.clevermind.shoppinglist.network.Request;
 import com.clevermind.shoppinglist.utils.ErrorFormatter;
@@ -126,7 +126,7 @@ public class SubscribeFragment extends Fragment implements ApiTask.IApiTask {
             case ApiConst.CODE_OK:
 
                 UserManager userManager = new UserManager();
-                User user = userManager.createFromResult(response.getResult());
+                User user = userManager.createFromResult(response.getResultObject());
                 userManager.logUser(user, this.getActivity());
 
                 message = getResources().getString(R.string.message_subcribed_success);

@@ -5,16 +5,20 @@ import android.Manifest;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.clevermind.shoppinglist.fragments.LoginFragment;
 import com.clevermind.shoppinglist.fragments.SubscribeFragment;
+import com.clevermind.shoppinglist.managers.UserManager;
+import com.clevermind.shoppinglist.models.User;
 
 public class MainActivity extends AppCompatActivity implements SubscribeFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener {
 
@@ -75,15 +79,16 @@ public class MainActivity extends AppCompatActivity implements SubscribeFragment
 
         }
 
-        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
-        String token = sharedPreferences.getString("token", "");
+        String token = new UserManager().getTokenUser(this);
 
         if (token != "") {
-            Toast.makeText(this, "Vous êtes connecté!", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(this, "Veuillez vous connecter!", Toast.LENGTH_LONG).show();
-        }
 
+            Intent intent = new Intent(this, ShoppingListActivity.class);
+            //Start the new activity as the root Task (Exit the app instead of go identification)
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+
+        }
     }
 
     @Override

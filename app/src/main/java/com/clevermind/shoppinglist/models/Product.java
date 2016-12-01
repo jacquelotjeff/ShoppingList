@@ -1,4 +1,6 @@
-package com.clevermind.shoppinglist.model;
+package com.clevermind.shoppinglist.models;
+
+import java.util.Date;
 
 /**
  * Created by adrien on 28/11/16.
@@ -45,4 +47,5 @@ public class Product {
     public void setPrice(float price) {
         this.price = price;
     }
+
 }
