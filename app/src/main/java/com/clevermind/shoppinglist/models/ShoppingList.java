@@ -16,6 +16,13 @@ public class ShoppingList {
 
     private Boolean completed;
 
+    public ShoppingList(Integer id, String name){
+
+        this.id = id;
+        this.name = name;
+
+    }
+
     public ShoppingList(String name){
 
         this.name = name;

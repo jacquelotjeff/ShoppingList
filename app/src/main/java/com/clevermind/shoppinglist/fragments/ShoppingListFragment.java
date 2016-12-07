@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.clevermind.shoppinglist.R;
 import com.clevermind.shoppinglist.adapters.ShoppingListAdapter;
@@ -23,14 +22,16 @@ import com.clevermind.shoppinglist.network.ApiTask;
 import com.clevermind.shoppinglist.network.Request;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
 
     private OnFragmentInteractionListener mListener;
+
+    private static final String STATE_LIST = "list";
+
+    private ArrayList<ShoppingList> mList;
 
     public ShoppingListFragment() {
     }
@@ -48,14 +49,24 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View listView = inflater.inflate(R.layout.fragment_shopping_list, container, false);
+        View listLayout = inflater.inflate(R.layout.fragment_shopping_list, container, false);
 
-        ApiTask apiRequest = new ApiTask();
-        apiRequest.setListener(ShoppingListFragment.this);
-        apiRequest.execute(buildRequestForList());
+        // On configuration changes save the state and no API calls
+        if (savedInstanceState == null) {
 
+            mList = new ArrayList<>();
 
-        Button btnLinkListCreate = (Button) listView.findViewById(R.id.btnLinkShoppingListCreate);
+            ApiTask apiRequest = new ApiTask();
+            apiRequest.setListener(ShoppingListFragment.this);
+            apiRequest.execute(buildRequestForList());
+
+        } else {
+
+            mList = (ArrayList<ShoppingList>) savedInstanceState.getSerializable(STATE_LIST);
+
+        }
+
+        Button btnLinkListCreate = (Button) listLayout.findViewById(R.id.btnLinkShoppingListCreate);
 
         btnLinkListCreate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +76,7 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
 
         });
 
-        return listView;
+        return listLayout;
 
 
     }
@@ -97,16 +108,23 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
         mListener = null;
     }
 
-    @Override
     public void onApiFinished(ApiTask task, ApiResponse result) {
 
         JSONArray jsonLists = result.getResultArray();
         ShoppingListManager shoppingListManager = new ShoppingListManager();
-        ArrayList<ShoppingList> list = shoppingListManager.createFromResultArray(jsonLists);
-        ShoppingListAdapter adapter = new ShoppingListAdapter(this.getActivity(), list);
+
+        mList = shoppingListManager.createFromResultArray(jsonLists);
+        ShoppingListAdapter adapter = new ShoppingListAdapter(this.getActivity(), mList);
+
         ListView listView = (ListView) this.getView().findViewById(R.id.listViewShoppingList);
         listView.setAdapter(adapter);
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(STATE_LIST, mList);
     }
 
     public interface OnFragmentInteractionListener {

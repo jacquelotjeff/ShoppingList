@@ -19,7 +19,7 @@ public class ShoppingListManager {
 
         try {
 
-            ShoppingList shoppingList = new ShoppingList(json.getString("name"));
+            ShoppingList shoppingList = new ShoppingList(json.getInt("id"), json.getString("name"));
 
             return shoppingList;
 
