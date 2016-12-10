@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.clevermind.shoppinglist.R;
 import com.clevermind.shoppinglist.ShoppingListActivity;
-import com.clevermind.shoppinglist.models.ShoppingList;
 import com.clevermind.shoppinglist.network.ApiResponse;
 import com.clevermind.shoppinglist.network.ApiTask;
 import com.clevermind.shoppinglist.managers.UserManager;
@@ -70,21 +69,21 @@ public class LoginFragment extends Fragment implements ApiTask.IApiTask {
         btnLinkLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            EditText txtBoxMail = (EditText) getView().findViewById(R.id.txtBoxMail);
-            EditText txtBoxPassword = (EditText) getView().findViewById(R.id.txtBoxPassword);
+                EditText txtBoxMail = (EditText) getView().findViewById(R.id.txtBoxMail);
+                EditText txtBoxPassword = (EditText) getView().findViewById(R.id.txtBoxPassword);
 
-            String mail = txtBoxMail.getText().toString();
-            String password = txtBoxPassword.getText().toString();
+                String mail = txtBoxMail.getText().toString();
+                String password = txtBoxPassword.getText().toString();
 
-            boolean isValid = validForm(mail, password);
+                boolean isValid = validForm(mail, password);
 
-            if (isValid) {
-                final User user = new User(mail, password);
+                if (isValid) {
+                    final User user = new User(mail, password);
 
-                ApiTask apiRequest = new ApiTask();
-                apiRequest.setListener(LoginFragment.this);
-                apiRequest.execute(buildRequestForLogin(user));
-            }
+                    ApiTask apiRequest = new ApiTask();
+                    apiRequest.setListener(LoginFragment.this);
+                    apiRequest.execute(buildRequestForLogin(user));
+                }
             }
         });
 
