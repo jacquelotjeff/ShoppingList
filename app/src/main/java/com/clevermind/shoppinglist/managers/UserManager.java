@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.clevermind.shoppinglist.network.ApiTask;
 import com.clevermind.shoppinglist.models.User;
 
 import org.json.JSONException;
@@ -13,11 +14,19 @@ public class UserManager extends ApiTask {
 
     public void logUser(User user, Activity context){
 
-        SharedPreferences sharedPreferences = context.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences("SHOP_AUTH", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString("token", user.getToken());
         editor.commit();
+
+    }
+
+    public String getTokenUser(Activity context){
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences("SHOP_AUTH", Context.MODE_PRIVATE);
+
+        return sharedPreferences.getString("token", "");
 
     }
 

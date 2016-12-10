@@ -1,10 +1,8 @@
-package com.clevermind.shoppinglist.managers;
+package com.clevermind.shoppinglist.network;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.util.Log;
 
-import com.clevermind.shoppinglist.network.ApiConst;
-import com.clevermind.shoppinglist.network.Request;
 import com.clevermind.shoppinglist.utils.HttpRequest;
 
 public class ApiTask extends AsyncTask<Request, Void, ApiResponse> {
@@ -22,7 +20,9 @@ public class ApiTask extends AsyncTask<Request, Void, ApiResponse> {
 
     @Override
     protected ApiResponse doInBackground(Request... requests) {
+
         try {
+
             Request request = requests[0];
             String result = "";
 

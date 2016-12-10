@@ -4,7 +4,8 @@
     <string name="app_main_welcome">Bienvenue sur Shopping List !</string>
     <string name="app_main_identification">Identification</string>
     <string name="app_main_registration">Inscription</string>
-
+    <string name="app_shopping_list">Mes Shopping List</string>
+    <string name="app_shopping_list_create">Ajouter une Shopping List</string>
     <!-- Link / Menu strings -->
     <string name="link_subscribe">Toujours pas inscrit? Je m\'inscris</string>
     <string name="link_login">Déjà inscrit? Je me connecte</string>
@@ -14,9 +15,11 @@
     <string name="form_user_first_name">Prénom</string>
     <string name="form_user_email">E-mail</string>
     <string name="form_user_password">Mot de passe</string>
+    <string name="form_shopping_list_name">Nom</string>
 
     <!-- Common -->
     <string name="common_submit">Valider</string>
+    <string name="common_create">Créer</string>
 
     <!-- Permissions -->
     <string name="permission_internet">L\'application Shopping List a besoin d\'une connnexion internet.</string>
@@ -27,6 +30,7 @@
     <string name="message_subcribed_mail_already_registered">Cet e-mail est déjà enregistré.</string>
     <string name="message_login_success">Vous êtes maintenant connecté.</string>
     <string name="message_login_failed">Connexion échouée, veuillez vérifier vos identifiants.</string>
+    <string name="message_list_successfully_created">Votre liste a bien été crée.</string>ring>
     <string name="message_app_error_occured">Une erreur est survenue (Code = %s)</string>
     <string name="message_app_no_internet">Vous ne semblez pas être connecté à internet.</string>
 

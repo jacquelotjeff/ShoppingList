@@ -2,7 +2,7 @@ package com.clevermind.shoppinglist.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,20 +13,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.clevermind.shoppinglist.R;
-import com.clevermind.shoppinglist.managers.ApiResponse;
-import com.clevermind.shoppinglist.managers.ApiTask;
+import com.clevermind.shoppinglist.ShoppingListActivity;
+import com.clevermind.shoppinglist.network.ApiResponse;
+import com.clevermind.shoppinglist.network.ApiTask;
 import com.clevermind.shoppinglist.managers.UserManager;
 import com.clevermind.shoppinglist.models.User;
 import com.clevermind.shoppinglist.network.ApiConst;
 import com.clevermind.shoppinglist.network.Request;
 import com.clevermind.shoppinglist.utils.ErrorFormatter;
 
-import org.json.JSONException;
-
 import java.util.HashMap;
-import java.util.Set;
 
 public class LoginFragment extends Fragment implements ApiTask.IApiTask {
+
     private OnFragmentInteractionListener mListener;
 
     public LoginFragment() {
@@ -51,8 +50,8 @@ public class LoginFragment extends Fragment implements ApiTask.IApiTask {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View loginView = inflater.inflate(R.layout.fragment_login, container, false);
 
         Button btnLinkLogin = (Button) loginView.findViewById(R.id.btnSubmit);
@@ -131,8 +130,12 @@ public class LoginFragment extends Fragment implements ApiTask.IApiTask {
             case ApiConst.CODE_OK:
 
                 UserManager userManager = new UserManager();
-                User user = userManager.createFromResult(response.getResult());
+                User user = userManager.createFromResult(response.getResultObject());
                 userManager.logUser(user, this.getActivity());
+
+                Intent intent = new Intent(this.getActivity(), ShoppingListActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
 
                 message = getResources().getString(R.string.message_login_success);
                 Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
