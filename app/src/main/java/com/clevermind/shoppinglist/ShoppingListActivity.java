@@ -21,11 +21,17 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_shopping_list);
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        Fragment shoppingListFragment = new ShoppingListFragment();
-        ft.replace(R.id.fragmentContainer, shoppingListFragment);
-        ft.commit();
+
+        if (savedInstanceState == null) {
+
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            Fragment shoppingListFragment = new ShoppingListFragment();
+            ft.replace(R.id.fragmentContainer, shoppingListFragment);
+            ft.commit();
+
+        }
 
     }
 

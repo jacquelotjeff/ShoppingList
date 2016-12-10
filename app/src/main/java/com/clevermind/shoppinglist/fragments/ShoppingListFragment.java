@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,8 +55,6 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
         // On configuration changes save the state and no API calls
         if (savedInstanceState == null) {
 
-            mList = new ArrayList<>();
-
             ApiTask apiRequest = new ApiTask();
             apiRequest.setListener(ShoppingListFragment.this);
             apiRequest.execute(buildRequestForList());
@@ -63,6 +62,11 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
         } else {
 
             mList = (ArrayList<ShoppingList>) savedInstanceState.getSerializable(STATE_LIST);
+            ShoppingListAdapter adapter = new ShoppingListAdapter(this.getActivity(), mList);
+
+            ListView listView = (ListView) listLayout.findViewById(R.id.listViewShoppingList);
+            listView.setAdapter(adapter);
+
 
         }
 
