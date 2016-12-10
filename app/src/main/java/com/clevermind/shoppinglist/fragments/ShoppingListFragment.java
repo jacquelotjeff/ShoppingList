@@ -1,6 +1,7 @@
 package com.clevermind.shoppinglist.fragments;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,12 +30,15 @@ import java.util.ArrayList;
 public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
 
     private OnFragmentInteractionListener mListener;
+    private ApiTask apiRequest;
 
     private static final String STATE_LIST = "list";
+    public static final String TAG = "shopping_list_fragment";
 
     private ArrayList<ShoppingList> mList;
 
     public ShoppingListFragment() {
+
     }
 
     public static ShoppingListFragment newInstance(String param1, String param2) {
@@ -55,7 +59,7 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
         // On configuration changes save the state and no API calls
         if (savedInstanceState == null) {
 
-            ApiTask apiRequest = new ApiTask();
+            apiRequest = new ApiTask();
             apiRequest.setListener(ShoppingListFragment.this);
             apiRequest.execute(buildRequestForList());
 
@@ -139,4 +143,13 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
     public void onClickCreateListButton() {
         mListener.onClickCreateListButton();
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (apiRequest != null) {
+            apiRequest.cancel(true);
+        }
+    }
+
 }

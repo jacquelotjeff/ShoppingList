@@ -4,15 +4,10 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.FrameLayout;
 
-import com.clevermind.shoppinglist.fragments.LoginFragment;
 import com.clevermind.shoppinglist.fragments.ShoppingListCreateFragment;
 import com.clevermind.shoppinglist.fragments.ShoppingListFragment;
 
@@ -28,7 +23,7 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
 
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             Fragment shoppingListFragment = new ShoppingListFragment();
-            ft.replace(R.id.fragmentContainer, shoppingListFragment);
+            ft.replace(R.id.fragmentContainer, shoppingListFragment, ShoppingListFragment.TAG);
             ft.commit();
 
         }
@@ -42,12 +37,14 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
 
     @Override
     public void onClickCreateListButton() {
+
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         Fragment createListFragment = new ShoppingListCreateFragment();
         ft.replace(R.id.fragmentContainer, createListFragment);
         ft.addToBackStack(null);
         ft.commit();
+
     }
 
     @Override
@@ -59,4 +56,5 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
         ft.addToBackStack(null);
         ft.commit();
     }
+
 }
