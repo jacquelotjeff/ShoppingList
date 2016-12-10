@@ -70,25 +70,26 @@ public class MainActivity extends AppCompatActivity implements SubscribeFragment
         }
 
         if (permissionsVerified) {
-
             // By default add the login fragment
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             Fragment loginFragment = new LoginFragment();
             ft.replace(R.id.layoutContainer, loginFragment);
             ft.commit();
-
         }
 
         String token = new UserManager().getTokenUser(this);
 
         if (token != "") {
-
-            Intent intent = new Intent(this, ShoppingListActivity.class);
-            //Start the new activity as the root Task (Exit the app instead of go identification)
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-
+            startShoppingListActivity();
         }
+    }
+
+    public void startShoppingListActivity()
+    {
+        Intent intent = new Intent(this, ShoppingListActivity.class);
+        //Start the new activity as the root Task (Exit the app instead of go identification)
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     @Override
@@ -106,6 +107,11 @@ public class MainActivity extends AppCompatActivity implements SubscribeFragment
         //On login fragment clear back stack.
         fm.popBackStack();
         ft.commit();
+    }
+
+    @Override
+    public void onRegistrationFinish() {
+        startShoppingListActivity();
     }
 
     @Override

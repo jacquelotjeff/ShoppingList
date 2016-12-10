@@ -115,6 +115,10 @@ public class SubscribeFragment extends Fragment implements ApiTask.IApiTask {
         mListener = null;
     }
 
+    public void OnRegistrationFinish() {
+        mListener.onRegistrationFinish();
+    }
+
     public void OnClickLoginButton() {
         mListener.onClickLoginButton();
     }
@@ -131,7 +135,7 @@ public class SubscribeFragment extends Fragment implements ApiTask.IApiTask {
 
                 message = getResources().getString(R.string.message_subcribed_success);
                 Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-                OnClickLoginButton();
+                OnRegistrationFinish();
                 break;
             case ApiConst.CODE_EMAIL_ALREADY_REGISTERED:
                 message = getResources().getString(R.string.message_subcribed_mail_already_registered);
@@ -148,5 +152,6 @@ public class SubscribeFragment extends Fragment implements ApiTask.IApiTask {
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction();
         void onClickLoginButton();
+        void onRegistrationFinish();
     }
 }
