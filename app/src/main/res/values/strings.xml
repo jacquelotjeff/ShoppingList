@@ -18,6 +18,8 @@
     <string name="form_shopping_list_name">Nom</string>
 
     <!-- Form errors -->
+    <string name="form_user_email_unvalid">Vous devez renseigner un email valide.</string>
+    <string name="form_user_password_empty">Vous devez renseigner un mot de passe.</string>
     <string name="form_shopping_list_name_empty">Vous devez renseigner le nom de votre liste de course.</string>
 
     <!-- Common -->

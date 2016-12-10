@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.clevermind.shoppinglist.R;
 import com.clevermind.shoppinglist.ShoppingListActivity;
+import com.clevermind.shoppinglist.models.ShoppingList;
 import com.clevermind.shoppinglist.network.ApiResponse;
 import com.clevermind.shoppinglist.network.ApiTask;
 import com.clevermind.shoppinglist.managers.UserManager;
@@ -68,19 +70,21 @@ public class LoginFragment extends Fragment implements ApiTask.IApiTask {
         btnLinkLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+            EditText txtBoxMail = (EditText) getView().findViewById(R.id.txtBoxMail);
+            EditText txtBoxPassword = (EditText) getView().findViewById(R.id.txtBoxPassword);
 
-                EditText txtBoxMail = (EditText) getView().findViewById(R.id.txtBoxMail);
-                EditText txtBoxPassword = (EditText) getView().findViewById(R.id.txtBoxPassword);
+            String mail = txtBoxMail.getText().toString();
+            String password = txtBoxPassword.getText().toString();
 
-                String mail = txtBoxMail.getText().toString();
-                String password = txtBoxPassword.getText().toString();
+            boolean isValid = validForm(mail, password);
 
+            if (isValid) {
                 final User user = new User(mail, password);
 
                 ApiTask apiRequest = new ApiTask();
                 apiRequest.setListener(LoginFragment.this);
                 apiRequest.execute(buildRequestForLogin(user));
-
+            }
             }
         });
 
@@ -152,8 +156,37 @@ public class LoginFragment extends Fragment implements ApiTask.IApiTask {
 
     }
 
+    private boolean validForm(String mail, String password) {
+        boolean isValid = true;
+        boolean emailValid = android.util.Patterns.EMAIL_ADDRESS.matcher(mail).matches();
+
+        TextInputLayout tilEmail = (TextInputLayout) getView().findViewById(R.id.txtBoxEmailGroup);
+        if (mail.trim().length() == 0 || !emailValid) {
+            tilEmail.setErrorEnabled(true);
+            tilEmail.setError(getResources().getString(R.string.form_user_email_unvalid));
+
+            isValid = false;
+        } else {
+            tilEmail.setErrorEnabled(false);
+        }
+
+
+        TextInputLayout tilPassword = (TextInputLayout) getView().findViewById(R.id.txtBoxPasswordGroup);
+        if (password.trim().length() == 0) {
+            tilPassword.setErrorEnabled(true);
+            tilPassword.setError(getResources().getString(R.string.form_user_password_empty));
+
+            isValid = false;
+        } else {
+            tilPassword.setErrorEnabled(false);
+        }
+
+        return isValid;
+    }
+
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction();
+
         void onClickRegistrationButton();
     }
 }
