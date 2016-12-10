@@ -6,6 +6,8 @@ import android.app.ListFragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,20 +58,38 @@ public class ShoppingListCreateFragment extends Fragment implements ApiTask.IApi
             public void onClick(View view) {
 
                 EditText txtName = (EditText) getView().findViewById(R.id.txtBoxName);
-                String name = txtName.getText().toString();
 
-                ShoppingList shoppingList = new ShoppingList(name);
+                boolean isValid = validForm(txtName);
 
-                ApiTask apiRequest = new ApiTask();
-                apiRequest.setListener(ShoppingListCreateFragment.this);
-                apiRequest.execute(buildRequestForCreate(shoppingList));
+                if (isValid) {
+                    String name = txtName.getText().toString();
+                    ShoppingList shoppingList = new ShoppingList(name);
 
+                    ApiTask apiRequest = new ApiTask();
+                    apiRequest.setListener(ShoppingListCreateFragment.this);
+                    apiRequest.execute(buildRequestForCreate(shoppingList));
+                }
             }
 
         });
 
         return createView;
     }
+
+    private boolean validForm(EditText txtName) {
+        String name = txtName.getText().toString();
+
+        if (name.trim().length() == 0) {
+            TextInputLayout til = (TextInputLayout) getView().findViewById(R.id.txtBoxNameGroup);
+            til.setErrorEnabled(true);
+            til.setError(getResources().getString(R.string.form_shopping_list_name_empty));
+
+            return false;
+        }
+
+        return true;
+    }
+
 
     private Request buildRequestForCreate(ShoppingList shoppingList){
 
