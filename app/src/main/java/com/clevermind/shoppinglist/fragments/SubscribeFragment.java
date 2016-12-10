@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Context;
 
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,11 +72,16 @@ public class SubscribeFragment extends Fragment implements ApiTask.IApiTask {
                 String userEmail = txtBoxMail.getText().toString();
                 String userPassword = txtBoxPassword.getText().toString();
 
-                final User user = new User(userLastname, userFirstname, userEmail, userPassword);
 
-                ApiTask apiRequest = new ApiTask();
-                apiRequest.setListener(SubscribeFragment.this);
-                apiRequest.execute(buildRequestForSubscribe(user));
+                boolean isValid = validForm(userLastname, userFirstname, userEmail, userPassword);
+
+                if (isValid) {
+                    final User user = new User(userLastname, userFirstname, userEmail, userPassword);
+
+                    ApiTask apiRequest = new ApiTask();
+                    apiRequest.setListener(SubscribeFragment.this);
+                    apiRequest.execute(buildRequestForSubscribe(user));
+                }
             }
 
         });
@@ -134,7 +140,8 @@ public class SubscribeFragment extends Fragment implements ApiTask.IApiTask {
                 userManager.logUser(user, this.getActivity());
 
                 message = getResources().getString(R.string.message_subcribed_success);
-                Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+
+                Toast.makeText(getActivity(), String.format(message, user.getFirstname()), Toast.LENGTH_LONG).show();
                 OnRegistrationFinish();
                 break;
             case ApiConst.CODE_EMAIL_ALREADY_REGISTERED:
@@ -149,9 +156,56 @@ public class SubscribeFragment extends Fragment implements ApiTask.IApiTask {
         }
     }
 
+    private boolean validForm(String lastName, String firstName, String email, String password) {
+        boolean isValid = true;
+        boolean emailValid = android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+
+        TextInputLayout tilEmail = (TextInputLayout) getView().findViewById(R.id.txtBoxEmailGroup);
+        if (email.trim().length() == 0 || !emailValid) {
+            tilEmail.setErrorEnabled(true);
+            tilEmail.setError(getResources().getString(R.string.form_user_email_unvalid));
+
+            isValid = false;
+        } else {
+            tilEmail.setErrorEnabled(false);
+        }
+
+        TextInputLayout tilLastName = (TextInputLayout) getView().findViewById(R.id.txtBoxLastNameGroup);
+        if (lastName.trim().length() == 0) {
+            tilLastName.setErrorEnabled(true);
+            tilLastName.setError(getResources().getString(R.string.form_user_last_name_empty));
+
+            isValid = false;
+        } else {
+            tilLastName.setErrorEnabled(false);
+        }
+
+        TextInputLayout tilFirstName = (TextInputLayout) getView().findViewById(R.id.txtBoxFirstNameGroup);
+        if (firstName.trim().length() == 0) {
+            tilFirstName.setErrorEnabled(true);
+            tilFirstName.setError(getResources().getString(R.string.form_user_first_name_empty));
+
+            isValid = false;
+        } else {
+            tilFirstName.setErrorEnabled(false);
+        }
+
+        TextInputLayout tilPassword = (TextInputLayout) getView().findViewById(R.id.txtBoxPasswordGroup);
+        if (password.trim().length() == 0) {
+            tilPassword.setErrorEnabled(true);
+            tilPassword.setError(getResources().getString(R.string.form_user_password_empty));
+
+            isValid = false;
+        } else {
+            tilPassword.setErrorEnabled(false);
+        }
+
+        return isValid;
+    }
+
     public interface OnFragmentInteractionListener {
-        void onFragmentInteraction();
         void onClickLoginButton();
+
         void onRegistrationFinish();
     }
 }

@@ -4,8 +4,8 @@
     <string name="app_main_welcome">Bienvenue sur Shopping List !</string>
     <string name="app_main_identification">Identification</string>
     <string name="app_main_registration">Inscription</string>
-    <string name="app_shopping_list">Mes Shopping List</string>
-    <string name="app_shopping_list_create">Ajouter une Shopping List</string>
+    <string name="app_shopping_list">Mes listes de courses</string>
+    <string name="app_shopping_list_create">Ajouter une liste</string>
     <!-- Link / Menu strings -->
     <string name="link_subscribe">Toujours pas inscrit? Je m\'inscris</string>
     <string name="link_login">Déjà inscrit? Je me connecte</string>
@@ -20,6 +20,8 @@
     <!-- Form errors -->
     <string name="form_user_email_unvalid">Vous devez renseigner un email valide.</string>
     <string name="form_user_password_empty">Vous devez renseigner un mot de passe.</string>
+    <string name="form_user_last_name_empty">Vous devez renseigner votre nom.</string>
+    <string name="form_user_first_name_empty">Vous devez renseigner votre prénom.</string>
     <string name="form_shopping_list_name_empty">Vous devez renseigner le nom de votre liste de course.</string>
 
     <!-- Common -->
@@ -31,7 +33,7 @@
     <string name="permission_network_state">L\'application Shopping List a besoin de vérifier l\'état de votre connexion.</string>
 
     <!-- Messages -->
-    <string name="message_subcribed_success">Vous êtes maintenant inscrit.</string>
+    <string name="message_subcribed_success">Bienvenue %s !</string>
     <string name="message_subcribed_mail_already_registered">Cet e-mail est déjà enregistré.</string>
     <string name="message_login_success">Vous êtes maintenant connecté.</string>
     <string name="message_login_failed">Connexion échouée, veuillez vérifier vos identifiants.</string>

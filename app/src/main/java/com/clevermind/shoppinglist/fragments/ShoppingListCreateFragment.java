@@ -56,19 +56,16 @@ public class ShoppingListCreateFragment extends Fragment implements ApiTask.IApi
 
             @Override
             public void onClick(View view) {
+            EditText txtName = (EditText) getView().findViewById(R.id.txtBoxName);
+            String name = txtName.getText().toString();
+            boolean isValid = validForm(name);
 
-                EditText txtName = (EditText) getView().findViewById(R.id.txtBoxName);
-
-                boolean isValid = validForm(txtName);
-
-                if (isValid) {
-                    String name = txtName.getText().toString();
-                    ShoppingList shoppingList = new ShoppingList(name);
-
-                    ApiTask apiRequest = new ApiTask();
-                    apiRequest.setListener(ShoppingListCreateFragment.this);
-                    apiRequest.execute(buildRequestForCreate(shoppingList));
-                }
+            if (isValid) {
+                ShoppingList shoppingList = new ShoppingList(name);
+                ApiTask apiRequest = new ApiTask();
+                apiRequest.setListener(ShoppingListCreateFragment.this);
+                apiRequest.execute(buildRequestForCreate(shoppingList));
+            }
             }
 
         });
@@ -76,9 +73,7 @@ public class ShoppingListCreateFragment extends Fragment implements ApiTask.IApi
         return createView;
     }
 
-    private boolean validForm(EditText txtName) {
-        String name = txtName.getText().toString();
-
+    private boolean validForm(String name) {
         if (name.trim().length() == 0) {
             TextInputLayout til = (TextInputLayout) getView().findViewById(R.id.txtBoxNameGroup);
             til.setErrorEnabled(true);
