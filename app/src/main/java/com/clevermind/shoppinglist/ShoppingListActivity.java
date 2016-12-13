@@ -50,15 +50,12 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
     }
 
     @Override
-    public void onClickShowButton(Integer id) {
+    public void onClickShowButton(ShoppingList shoppingList) {
 
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        Fragment shoppingListShowFragment = new ShoppingListShowFragment();
-        Bundle arguments = new Bundle();
-        // Eviter de requêter l'api et recupérer la shopping list depuis le fragment
-        //arguments.putSerializable("shoppingList", shoppingList);
-        shoppingListShowFragment.setArguments(arguments);
+        Fragment shoppingListShowFragment = ShoppingListShowFragment.newInstance(shoppingList);
+
         ft.replace(R.id.fragmentContainer, shoppingListShowFragment);
         ft.addToBackStack(null);
         ft.commit();

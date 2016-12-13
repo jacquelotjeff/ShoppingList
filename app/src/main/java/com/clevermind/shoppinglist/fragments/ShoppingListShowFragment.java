@@ -11,42 +11,43 @@ import android.widget.TextView;
 
 import com.clevermind.shoppinglist.R;
 import com.clevermind.shoppinglist.managers.ShoppingListManager;
+import com.clevermind.shoppinglist.models.ShoppingList;
 
 public class ShoppingListShowFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
-    private static final String SHOPPING_LIST_ID = "id";
-    private String idShoppingList;
+    private static final String SHOPPING_LIST_CHOICED = "shopping_list";
+    private ShoppingList shoppingList;
 
     public ShoppingListShowFragment() {
-        // Required empty public constructor
     }
 
-    public static ShoppingListShowFragment newInstance(Integer id) {
+    public static ShoppingListShowFragment newInstance(ShoppingList shoppingList) {
         ShoppingListShowFragment fragment = new ShoppingListShowFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(SHOPPING_LIST_CHOICED, shoppingList);
+        fragment.setArguments(bundle);
+
+
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            idShoppingList = getArguments().getString(SHOPPING_LIST_ID);
-        }
-
-    }
+    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        shoppingList = (ShoppingList) getArguments().getSerializable(SHOPPING_LIST_CHOICED);
+        super.onCreate(savedInstanceState);
 
         View viewLayout = inflater.inflate(R.layout.fragment_shopping_list_show, container, false);
 
-        //Get the shopping list from manager.
         TextView lblName = (TextView) viewLayout.findViewById(R.id.lblName);
-        //lblName.setText();
+        lblName.setText(shoppingList.getName());
 
         return viewLayout;
-
     }
 
     @Override

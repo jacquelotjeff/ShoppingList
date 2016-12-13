@@ -1,16 +1,12 @@
 package com.clevermind.shoppinglist.fragments;
 
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListAdapter;
@@ -41,6 +37,11 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
 
     private ArrayList<ShoppingList> mList;
 
+    public interface OnFragmentInteractionListener {
+        void onClickCreateListButton();
+        void onClickShowButton(ShoppingList shoppingList);
+    }
+
     public ShoppingListFragment() {
 
     }
@@ -68,7 +69,6 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
             apiRequest.execute(buildRequestForList());
 
         } else {
-
             mList = (ArrayList<ShoppingList>) savedInstanceState.getSerializable(STATE_LIST);
             this.showData();
 
@@ -88,8 +88,7 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
 
     }
 
-    private void showData(){
-
+    private void showData() {
         mAdapter = new ShoppingListAdapter(this.getActivity(), mList);
 
         ListView listView = (ListView) this.getView().findViewById(R.id.listViewShoppingList);
@@ -99,7 +98,8 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.d("JJ", "dlkjlkjdkljl");
+                ShoppingList shoppingList = (ShoppingList) mAdapter.getItem(i);
+                onClickShowButton(shoppingList);
             }
         });
     }
@@ -112,7 +112,6 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
         request.addParam("token", new UserManager().getTokenUser(this.getActivity()));
 
         return request;
-
     }
 
     @Override
@@ -146,18 +145,12 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
         outState.putSerializable(STATE_LIST, mList);
     }
 
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
-        void onClickCreateListButton();
-        void onClickShowButton(Integer id);
-    }
-
     public void onClickCreateListButton() {
         mListener.onClickCreateListButton();
     }
 
-    public void onClickShowButton(Integer id) {
-        mListener.onClickShowButton(id);
+    public void onClickShowButton(ShoppingList shoppingList) {
+        mListener.onClickShowButton(shoppingList);
     }
 
     @Override

@@ -30,7 +30,7 @@ public class SubscribeFragment extends Fragment implements ApiTask.IApiTask {
     public SubscribeFragment() {
     }
 
-    public static SubscribeFragment newInstance(String param1, String param2) {
+    public static SubscribeFragment newInstance() {
         SubscribeFragment fragment = new SubscribeFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -205,7 +205,6 @@ public class SubscribeFragment extends Fragment implements ApiTask.IApiTask {
 
     public interface OnFragmentInteractionListener {
         void onClickLoginButton();
-
         void onRegistrationFinish();
     }
 }
