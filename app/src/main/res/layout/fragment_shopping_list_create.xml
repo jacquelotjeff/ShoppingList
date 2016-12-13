@@ -5,17 +5,17 @@
     tools:context="com.clevermind.shoppinglist.fragments.ShoppingListCreateFragment">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
             android:text="@string/app_shopping_list_create"
-            android:textSize="30sp"
-            android:paddingBottom="20dp" />
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/lblName"
@@ -23,18 +23,25 @@
             android:layout_height="wrap_content"
             android:text="@string/form_shopping_list_name" />
 
-        <EditText
-            android:id="@+id/txtBoxName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"/>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/txtBoxNameGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/txtBoxName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10" />
+
+        </android.support.design.widget.TextInputLayout>
 
         <Button
+            android:id="@+id/btnSubmit"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/common_submit"
-            android:id="@+id/btnSubmit" />
+            android:text="@string/common_submit" />
     </LinearLayout>
 
 </FrameLayout>

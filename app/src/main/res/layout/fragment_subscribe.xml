@@ -5,17 +5,17 @@
     tools:context="com.clevermind.shoppinglist.fragments.SubscribeFragment">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
             android:text="@string/app_main_registration"
-            android:textSize="30sp"
-            android:paddingBottom="20dp" />
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/lblFirstname"
@@ -23,12 +23,19 @@
             android:layout_height="wrap_content"
             android:text="@string/form_user_first_name" />
 
-        <EditText
-            android:id="@+id/txtBoxFirstname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName" />
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/txtBoxFirstNameGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/txtBoxFirstname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+        </android.support.design.widget.TextInputLayout>
 
         <TextView
             android:id="@+id/lblLastname"
@@ -36,26 +43,40 @@
             android:layout_height="wrap_content"
             android:text="@string/form_user_last_name" />
 
-        <EditText
-            android:id="@+id/txtBoxLastname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName" />
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/txtBoxLastNameGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/txtBoxLastname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+        </android.support.design.widget.TextInputLayout>
 
         <TextView
             android:id="@+id/lblMail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/form_user_email" />
+            android:text="@string/form_user_email"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-        <EditText
-            android:id="@+id/txtBoxMail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textEmailAddress" />
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/txtBoxEmailGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/txtBoxMail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textEmailAddress" />
+
+        </android.support.design.widget.TextInputLayout>
 
         <TextView
             android:id="@+id/lblPassword"
@@ -63,27 +84,34 @@
             android:layout_height="wrap_content"
             android:text="@string/form_user_password" />
 
-        <EditText
-            android:id="@+id/txtBoxPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword" />
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/txtBoxPasswordGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/txtBoxPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPassword" />
+
+        </android.support.design.widget.TextInputLayout>
 
         <Button
+            android:id="@+id/btnSubmit"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/common_submit"
-            android:id="@+id/btnSubmit" />
+            android:text="@string/common_submit" />
 
         <TextView
+            android:id="@+id/txtLinkLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/link_login"
-            android:textColor="@color/colorSecondary"
-            android:id="@+id/txtLinkLogin" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/colorSecondary" />
     </LinearLayout>
 
 </FrameLayout>
