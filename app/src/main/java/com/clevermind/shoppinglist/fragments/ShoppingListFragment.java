@@ -10,7 +10,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.clevermind.shoppinglist.R;
@@ -31,6 +34,7 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
 
     private OnFragmentInteractionListener mListener;
     private ApiTask apiRequest;
+    private ListAdapter mAdapter;
 
     private static final String STATE_LIST = "list";
     public static final String TAG = "shopping_list_fragment";
@@ -66,11 +70,7 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
         } else {
 
             mList = (ArrayList<ShoppingList>) savedInstanceState.getSerializable(STATE_LIST);
-            ShoppingListAdapter adapter = new ShoppingListAdapter(this.getActivity(), mList);
-
-            ListView listView = (ListView) listLayout.findViewById(R.id.listViewShoppingList);
-            listView.setAdapter(adapter);
-
+            this.showData();
 
         }
 
@@ -86,7 +86,22 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
 
         return listLayout;
 
+    }
 
+    private void showData(){
+
+        mAdapter = new ShoppingListAdapter(this.getActivity(), mList);
+
+        ListView listView = (ListView) this.getView().findViewById(R.id.listViewShoppingList);
+        listView.setAdapter(mAdapter);
+        listView.deferNotifyDataSetChanged();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d("JJ", "dlkjlkjdkljl");
+            }
+        });
     }
 
     public Request buildRequestForList(){
@@ -120,12 +135,8 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
 
         JSONArray jsonLists = result.getResultArray();
         ShoppingListManager shoppingListManager = new ShoppingListManager();
-
         mList = shoppingListManager.createFromResultArray(jsonLists);
-        ShoppingListAdapter adapter = new ShoppingListAdapter(this.getActivity(), mList);
-
-        ListView listView = (ListView) this.getView().findViewById(R.id.listViewShoppingList);
-        listView.setAdapter(adapter);
+        this.showData();
 
     }
 
@@ -138,10 +149,15 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
         void onClickCreateListButton();
+        void onClickShowButton(Integer id);
     }
 
     public void onClickCreateListButton() {
         mListener.onClickCreateListButton();
+    }
+
+    public void onClickShowButton(Integer id) {
+        mListener.onClickShowButton(id);
     }
 
     @Override

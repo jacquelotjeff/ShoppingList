@@ -10,8 +10,10 @@ import android.os.Bundle;
 
 import com.clevermind.shoppinglist.fragments.ShoppingListCreateFragment;
 import com.clevermind.shoppinglist.fragments.ShoppingListFragment;
+import com.clevermind.shoppinglist.fragments.ShoppingListShowFragment;
+import com.clevermind.shoppinglist.models.ShoppingList;
 
-public class ShoppingListActivity extends AppCompatActivity implements ShoppingListFragment.OnFragmentInteractionListener, ShoppingListCreateFragment.OnFragmentInteractionListener {
+public class ShoppingListActivity extends AppCompatActivity implements ShoppingListFragment.OnFragmentInteractionListener, ShoppingListCreateFragment.OnFragmentInteractionListener, ShoppingListShowFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,22 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
     }
 
     @Override
+    public void onClickShowButton(Integer id) {
+
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        Fragment shoppingListShowFragment = new ShoppingListShowFragment();
+        Bundle arguments = new Bundle();
+        // Eviter de requêter l'api et recupérer la shopping list depuis le fragment
+        //arguments.putSerializable("shoppingList", shoppingList);
+        shoppingListShowFragment.setArguments(arguments);
+        ft.replace(R.id.fragmentContainer, shoppingListShowFragment);
+        ft.addToBackStack(null);
+        ft.commit();
+
+    }
+
+    @Override
     public void onClickListButton() {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
@@ -56,5 +74,4 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
         ft.addToBackStack(null);
         ft.commit();
     }
-
 }
