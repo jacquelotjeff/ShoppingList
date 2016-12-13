@@ -27,6 +27,8 @@
     <!-- Common -->
     <string name="common_submit">Valider</string>
     <string name="common_create">Créer</string>
+    <string name="common_edit">Editer</string>
+    <string name="common_delete">Supprimer</string>
 
     <!-- Permissions -->
     <string name="permission_internet">L\'application Shopping List a besoin d\'une connnexion internet.</string>
@@ -40,5 +42,8 @@
     <string name="message_list_successfully_created">Votre liste a bien été crée.</string>ring>
     <string name="message_app_error_occured">Une erreur est survenue (Code = %s)</string>
     <string name="message_app_no_internet">Vous ne semblez pas être connecté à internet.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -32,13 +32,7 @@ public class LoginFragment extends Fragment implements ApiTask.IApiTask {
     public LoginFragment() {
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment SubscribeFragment.
-     */
-    public static LoginFragment newInstance(String param1, String param2) {
+    public static LoginFragment newInstance() {
         LoginFragment fragment = new LoginFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -184,8 +178,6 @@ public class LoginFragment extends Fragment implements ApiTask.IApiTask {
     }
 
     public interface OnFragmentInteractionListener {
-        void onFragmentInteraction();
-
         void onClickRegistrationButton();
     }
 }

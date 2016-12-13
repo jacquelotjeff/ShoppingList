@@ -1,16 +1,15 @@
 package com.clevermind.shoppinglist.fragments;
 
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.clevermind.shoppinglist.R;
@@ -31,11 +30,17 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
 
     private OnFragmentInteractionListener mListener;
     private ApiTask apiRequest;
+    private ListAdapter mAdapter;
 
     private static final String STATE_LIST = "list";
     public static final String TAG = "shopping_list_fragment";
 
     private ArrayList<ShoppingList> mList;
+
+    public interface OnFragmentInteractionListener {
+        void onClickCreateListButton();
+        void onClickShowButton(ShoppingList shoppingList);
+    }
 
     public ShoppingListFragment() {
 
@@ -64,13 +69,8 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
             apiRequest.execute(buildRequestForList());
 
         } else {
-
             mList = (ArrayList<ShoppingList>) savedInstanceState.getSerializable(STATE_LIST);
-            ShoppingListAdapter adapter = new ShoppingListAdapter(this.getActivity(), mList);
-
-            ListView listView = (ListView) listLayout.findViewById(R.id.listViewShoppingList);
-            listView.setAdapter(adapter);
-
+            this.showData();
 
         }
 
@@ -86,7 +86,22 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
 
         return listLayout;
 
+    }
 
+    private void showData() {
+        mAdapter = new ShoppingListAdapter(this.getActivity(), mList);
+
+        ListView listView = (ListView) this.getView().findViewById(R.id.listViewShoppingList);
+        listView.setAdapter(mAdapter);
+        listView.deferNotifyDataSetChanged();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                ShoppingList shoppingList = (ShoppingList) mAdapter.getItem(i);
+                onClickShowButton(shoppingList);
+            }
+        });
     }
 
     public Request buildRequestForList(){
@@ -97,7 +112,6 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
         request.addParam("token", new UserManager().getTokenUser(this.getActivity()));
 
         return request;
-
     }
 
     @Override
@@ -120,12 +134,8 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
 
         JSONArray jsonLists = result.getResultArray();
         ShoppingListManager shoppingListManager = new ShoppingListManager();
-
         mList = shoppingListManager.createFromResultArray(jsonLists);
-        ShoppingListAdapter adapter = new ShoppingListAdapter(this.getActivity(), mList);
-
-        ListView listView = (ListView) this.getView().findViewById(R.id.listViewShoppingList);
-        listView.setAdapter(adapter);
+        this.showData();
 
     }
 
@@ -135,13 +145,12 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
         outState.putSerializable(STATE_LIST, mList);
     }
 
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
-        void onClickCreateListButton();
-    }
-
     public void onClickCreateListButton() {
         mListener.onClickCreateListButton();
+    }
+
+    public void onClickShowButton(ShoppingList shoppingList) {
+        mListener.onClickShowButton(shoppingList);
     }
 
     @Override

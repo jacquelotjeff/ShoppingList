@@ -1,7 +1,6 @@
 package com.clevermind.shoppinglist.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +10,7 @@ import android.widget.TextView;
 import com.clevermind.shoppinglist.R;
 import com.clevermind.shoppinglist.models.ShoppingList;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
-/**
- * Created by adrien on 30/11/16.
- */
 
 public class ShoppingListAdapter extends BaseAdapter {
 
@@ -62,10 +56,8 @@ public class ShoppingListAdapter extends BaseAdapter {
             lblName.setText(shoppingList.getName());
             //lblName.setText(new SimpleDateFormat("dd/MM/yyyy").format(shoppingList.getCreatedDate()));
             lblCreatedAt.setText("00/00/000");
-
         }
 
         return convertView;
-
     }
 }

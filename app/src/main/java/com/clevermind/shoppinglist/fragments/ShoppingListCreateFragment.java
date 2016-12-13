@@ -37,7 +37,7 @@ public class ShoppingListCreateFragment extends Fragment implements ApiTask.IApi
 
     }
 
-    public static ShoppingListCreateFragment newInstance(String param1, String param2) {
+    public static ShoppingListCreateFragment newInstance() {
         ShoppingListCreateFragment fragment = new ShoppingListCreateFragment();
         return fragment;
     }
@@ -147,7 +147,6 @@ public class ShoppingListCreateFragment extends Fragment implements ApiTask.IApi
     }
 
     public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
         void onClickListButton();
     }
 }
