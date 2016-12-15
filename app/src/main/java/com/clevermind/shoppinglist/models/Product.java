@@ -12,6 +12,13 @@ public class Product {
 
     private float price;
 
+    public Product(Integer id, String name, Integer quantity, float price){
+        this.id = id;
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
     public Integer getId() {
         return id;
     }

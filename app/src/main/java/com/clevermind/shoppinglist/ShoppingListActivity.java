@@ -8,12 +8,13 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.clevermind.shoppinglist.fragments.ProductListFragment;
 import com.clevermind.shoppinglist.fragments.ShoppingListCreateFragment;
 import com.clevermind.shoppinglist.fragments.ShoppingListFragment;
 import com.clevermind.shoppinglist.fragments.ShoppingListShowFragment;
 import com.clevermind.shoppinglist.models.ShoppingList;
 
-public class ShoppingListActivity extends AppCompatActivity implements ShoppingListFragment.OnFragmentInteractionListener, ShoppingListCreateFragment.OnFragmentInteractionListener, ShoppingListShowFragment.OnFragmentInteractionListener {
+public class ShoppingListActivity extends AppCompatActivity implements ShoppingListFragment.OnFragmentInteractionListener, ShoppingListCreateFragment.OnFragmentInteractionListener, ShoppingListShowFragment.OnFragmentInteractionListener, ProductListFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

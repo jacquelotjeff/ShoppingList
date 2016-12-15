@@ -2,42 +2,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.clevermind.shoppinglist.fragments.ShoppingListShowFragment">
+    tools:context="com.clevermind.shoppinglist.fragments.ProductListFragment">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <Button
-                android:text="@string/common_edit"
+            <TextView
+                android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/button4" />
+                android:text="@string/app_product_list"
+                android:textSize="30sp"
+                android:paddingBottom="20dp" />
 
             <Button
-                android:text="@string/common_delete"
+                android:text="@string/app_product_create"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/button3" />
+                android:id="@+id/btnLinkProductCreate"/>
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/lblName"/>
-
-        <FrameLayout android:id="@+id/productListFragmentContainer"
+        <ListView
+            android:id="@+id/listViewProduct"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </FrameLayout>
-
-
+            android:layout_height="match_parent" />
     </LinearLayout>
 
 </FrameLayout>

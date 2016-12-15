@@ -1,12 +1,14 @@
 package com.clevermind.shoppinglist.network;
 
 public class ApiConst {
+
     // URI
     public static final String BASE_URI = "http://appspaces.fr/esgi/shopping_list/";
     public static final String URI_SUBSCRIBE = BASE_URI+"account/subscribe.php";
     public static final String URI_LOGIN = BASE_URI+"account/login.php";
     public static final String URI_SHOPPING_LIST_CREATE = BASE_URI+"shopping_list/create.php";
     public static final String URI_SHOPPING_LIST = BASE_URI+"shopping_list/list.php";
+    public static final String URI_PRODUCT_LIST = BASE_URI+"product/list.php";
 
     // Errors code
     public static final String CODE_OK = "0";

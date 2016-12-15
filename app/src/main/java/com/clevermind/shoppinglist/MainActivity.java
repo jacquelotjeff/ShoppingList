@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.clevermind.shoppinglist.fragments.LoginFragment;
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements SubscribeFragment
         String token = new UserManager().getTokenUser(this);
 
         if (token != "") {
+            Log.d("INFO", token);
             startShoppingListActivity();
         }
     }
@@ -90,11 +92,6 @@ public class MainActivity extends AppCompatActivity implements SubscribeFragment
         //Start the new activity as the root Task (Exit the app instead of go identification)
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-    }
-
-    @Override
-    public void onFragmentInteraction() {
-
     }
 
     @Override

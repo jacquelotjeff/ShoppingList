@@ -1,6 +1,7 @@
 package com.clevermind.shoppinglist.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,7 @@ public class ShoppingListAdapter extends BaseAdapter {
 
         if (shoppingList != null) {
 
+            Log.d("DEBUG", shoppingList.getId().toString());
             TextView lblName = (TextView) convertView.findViewById(R.id.lblName);
             TextView lblCreatedAt = (TextView) convertView.findViewById(R.id.lblCreatedAt);
 
