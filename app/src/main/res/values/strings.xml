@@ -29,7 +29,7 @@
     <!-- Common -->
     <string name="common_submit">Valider</string>
     <string name="common_create">Créer</string>
-    <string name="common_edit">Editer</string>
+    <string name="common_edit">Éditer</string>
     <string name="common_delete">Supprimer</string>
 
     <!-- Permissions -->
