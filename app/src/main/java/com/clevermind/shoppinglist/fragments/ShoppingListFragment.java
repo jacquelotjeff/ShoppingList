@@ -5,10 +5,12 @@ import android.content.Context;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -46,21 +48,21 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
 
     }
 
-    public static ShoppingListFragment newInstance(String param1, String param2) {
-        ShoppingListFragment fragment = new ShoppingListFragment();
-        return fragment;
+    public static ShoppingListFragment newInstance() {
+        return new ShoppingListFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View listLayout = inflater.inflate(R.layout.fragment_shopping_list, container, false);
-
+        getActivity().setTitle(R.string.app_shopping_list);
         // On configuration changes save the state and no API calls
         if (savedInstanceState == null) {
 
@@ -71,18 +73,7 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
         } else {
             mList = (ArrayList<ShoppingList>) savedInstanceState.getSerializable(STATE_LIST);
             this.showData();
-
         }
-
-        Button btnLinkListCreate = (Button) listLayout.findViewById(R.id.btnLinkShoppingListCreate);
-
-        btnLinkListCreate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickCreateListButton();
-            }
-
-        });
 
         return listLayout;
 
@@ -93,6 +84,7 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
 
         ListView listView = (ListView) this.getView().findViewById(R.id.listViewShoppingList);
         listView.setAdapter(mAdapter);
+        listView.setClickable(true);
         listView.deferNotifyDataSetChanged();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -161,4 +153,21 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
         }
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+        inflater.inflate(R.menu.menu_shopping_list, menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                onClickCreateListButton();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

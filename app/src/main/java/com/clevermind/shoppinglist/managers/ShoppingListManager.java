@@ -7,7 +7,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by adrien on 30/11/16.
@@ -20,6 +22,16 @@ public class ShoppingListManager {
         try {
 
             ShoppingList shoppingList = new ShoppingList(json.getInt("id"), json.getString("name"));
+            String dateTimeCreatedAt = json.getString("created_date");
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+            Date createdDate = null;
+            try {
+                createdDate = sdf.parse(dateTimeCreatedAt);
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
+            shoppingList.setCreatedDate(createdDate);
 
             return shoppingList;
 

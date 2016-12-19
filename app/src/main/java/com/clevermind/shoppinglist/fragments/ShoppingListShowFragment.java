@@ -6,6 +6,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -35,19 +38,19 @@ public class ShoppingListShowFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
 
         ViewGroup viewLayout = (ViewGroup) inflater.inflate(R.layout.fragment_shopping_list_show, container, false);
 
         shoppingList = (ShoppingList) getArguments().getSerializable(SHOPPING_LIST_CHOICED);
-        TextView lblName = (TextView) viewLayout.findViewById(R.id.lblName);
-        lblName.setText(shoppingList.getName());
+        getActivity().setTitle(shoppingList.getName());
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         Fragment productListFragment = ProductListFragment.newInstance(shoppingList);
@@ -75,7 +78,25 @@ public class ShoppingListShowFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+        inflater.inflate(R.menu.menu_shopping_list_show, menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_edit:
+                // TODO onEditAction ...
+            case R.id.action_delete:
+                // TODO onDeleteAction ...
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

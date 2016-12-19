@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.clevermind.shoppinglist.R;
 import com.clevermind.shoppinglist.models.ShoppingList;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class ShoppingListAdapter extends BaseAdapter {
@@ -52,12 +54,18 @@ public class ShoppingListAdapter extends BaseAdapter {
         if (shoppingList != null) {
 
             Log.d("DEBUG", shoppingList.getId().toString());
+            Log.d("DEBUGGG", shoppingList.getCreatedDate().toString());
             TextView lblName = (TextView) convertView.findViewById(R.id.lblName);
             TextView lblCreatedAt = (TextView) convertView.findViewById(R.id.lblCreatedAt);
-
             lblName.setText(shoppingList.getName());
-            //lblName.setText(new SimpleDateFormat("dd/MM/yyyy").format(shoppingList.getCreatedDate()));
-            lblCreatedAt.setText("00/00/000");
+
+            try {
+                Format formatter = new SimpleDateFormat("dd/MM/yyyy");
+                String dateFormated = formatter.format(shoppingList.getCreatedDate());
+                lblCreatedAt.setText(dateFormated);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         return convertView;

@@ -49,7 +49,7 @@ public class ShoppingListCreateFragment extends Fragment implements ApiTask.IApi
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View createView =  inflater.inflate(R.layout.fragment_shopping_list_create, container, false);
-
+        getActivity().setTitle(R.string.app_shopping_list_create);
         Button btnSubmit = (Button) createView.findViewById(R.id.btnSubmit);
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {

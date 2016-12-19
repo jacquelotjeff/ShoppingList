@@ -7,6 +7,8 @@ import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import com.clevermind.shoppinglist.fragments.ProductListFragment;
 import com.clevermind.shoppinglist.fragments.ShoppingListCreateFragment;
