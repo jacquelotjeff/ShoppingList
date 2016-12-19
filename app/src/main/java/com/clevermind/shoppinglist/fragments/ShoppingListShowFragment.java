@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.clevermind.shoppinglist.R;
@@ -20,7 +21,13 @@ public class ShoppingListShowFragment extends Fragment {
     private static final String SHOPPING_LIST_CHOICED = "shopping_list";
     private ShoppingList shoppingList;
 
+    public interface OnFragmentInteractionListener {
+        void onClickEditListButton(ShoppingList shoppingList);
+        void onClickDeleteListButton(ShoppingList shoppingList);
+    }
+
     public ShoppingListShowFragment() {
+
     }
 
     public static ShoppingListShowFragment newInstance(ShoppingList shoppingList) {
@@ -40,7 +47,6 @@ public class ShoppingListShowFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-
         super.onCreate(savedInstanceState);
 
         ViewGroup viewLayout = (ViewGroup) inflater.inflate(R.layout.fragment_shopping_list_show, container, false);
@@ -48,6 +54,24 @@ public class ShoppingListShowFragment extends Fragment {
         shoppingList = (ShoppingList) getArguments().getSerializable(SHOPPING_LIST_CHOICED);
         TextView lblName = (TextView) viewLayout.findViewById(R.id.lblName);
         lblName.setText(shoppingList.getName());
+
+        Button btnEdit = (Button) viewLayout.findViewById(R.id.btnEdit);
+
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickEditListButton(shoppingList);
+            }
+        });
+
+        Button btnDelete = (Button) viewLayout.findViewById(R.id.btnDelete);
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickDeleteListButton(shoppingList);
+            }
+        });
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         Fragment productListFragment = ProductListFragment.newInstance(shoppingList);
@@ -74,8 +98,12 @@ public class ShoppingListShowFragment extends Fragment {
         mListener = null;
     }
 
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
+    public void onClickEditListButton(ShoppingList shoppingList) {
+        mListener.onClickEditListButton(shoppingList);
+    }
+
+    public void onClickDeleteListButton(ShoppingList shoppingList) {
+        mListener.onClickDeleteListButton(shoppingList);
     }
 
 }

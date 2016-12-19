@@ -19,13 +19,12 @@ public class ShoppingListManager {
 
         try {
 
-            ShoppingList shoppingList = new ShoppingList(json.getInt("id"), json.getString("name"));
+            ShoppingList shoppingList = new ShoppingList(json.getInt("id"), json.getString("name"), json.getInt("completed") == 1);
 
             return shoppingList;
 
         } catch (JSONException e) {
             e.printStackTrace();
-
             return null;
         }
     }
