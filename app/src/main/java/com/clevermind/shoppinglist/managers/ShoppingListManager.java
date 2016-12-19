@@ -21,23 +21,24 @@ public class ShoppingListManager {
 
         try {
 
-            ShoppingList shoppingList = new ShoppingList(json.getInt("id"), json.getString("name"));
+            ShoppingList shoppingList = new ShoppingList(json.getInt("id"), json.getString("name"), json.getInt("completed") == 1);
             String dateTimeCreatedAt = json.getString("created_date");
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
             Date createdDate = null;
+
             try {
                 createdDate = sdf.parse(dateTimeCreatedAt);
             }catch(Exception ex){
                 ex.printStackTrace();
             }
+
             shoppingList.setCreatedDate(createdDate);
 
             return shoppingList;
 
         } catch (JSONException e) {
             e.printStackTrace();
-
             return null;
         }
     }

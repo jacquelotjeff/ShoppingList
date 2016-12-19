@@ -71,6 +71,7 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
             apiRequest.execute(buildRequestForList());
 
         } else {
+
             mList = (ArrayList<ShoppingList>) savedInstanceState.getSerializable(STATE_LIST);
             this.showData();
         }
@@ -80,6 +81,7 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
     }
 
     private void showData() {
+
         mAdapter = new ShoppingListAdapter(this.getActivity(), mList);
 
         ListView listView = (ListView) this.getView().findViewById(R.id.listViewShoppingList);

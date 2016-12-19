@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.clevermind.shoppinglist.R;
@@ -23,7 +24,13 @@ public class ShoppingListShowFragment extends Fragment {
     private static final String SHOPPING_LIST_CHOICED = "shopping_list";
     private ShoppingList shoppingList;
 
+    public interface OnFragmentInteractionListener {
+        void onClickEditListButton(ShoppingList shoppingList);
+        void onClickDeleteListButton(ShoppingList shoppingList);
+    }
+
     public ShoppingListShowFragment() {
+
     }
 
     public static ShoppingListShowFragment newInstance(ShoppingList shoppingList) {
@@ -45,6 +52,7 @@ public class ShoppingListShowFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         ViewGroup viewLayout = (ViewGroup) inflater.inflate(R.layout.fragment_shopping_list_show, container, false);
@@ -77,7 +85,12 @@ public class ShoppingListShowFragment extends Fragment {
         mListener = null;
     }
 
-    public interface OnFragmentInteractionListener {
+    public void onClickEditListButton(ShoppingList shoppingList) {
+        mListener.onClickEditListButton(shoppingList);
+    }
+
+    public void onClickDeleteListButton(ShoppingList shoppingList) {
+        mListener.onClickDeleteListButton(shoppingList);
     }
 
     @Override
@@ -92,9 +105,9 @@ public class ShoppingListShowFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit:
-                // TODO onEditAction ...
+                onClickEditListButton(shoppingList);
             case R.id.action_delete:
-                // TODO onDeleteAction ...
+                onClickDeleteListButton(shoppingList);
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -12,12 +12,12 @@ import android.view.MenuInflater;
 
 import com.clevermind.shoppinglist.fragments.ProductListFragment;
 import com.clevermind.shoppinglist.fragments.ShoppingListCreateFragment;
+import com.clevermind.shoppinglist.fragments.ShoppingListEditFragment;
 import com.clevermind.shoppinglist.fragments.ShoppingListFragment;
 import com.clevermind.shoppinglist.fragments.ShoppingListShowFragment;
 import com.clevermind.shoppinglist.models.ShoppingList;
 
-public class ShoppingListActivity extends AppCompatActivity implements ShoppingListFragment.OnFragmentInteractionListener, ShoppingListCreateFragment.OnFragmentInteractionListener, ShoppingListShowFragment.OnFragmentInteractionListener, ProductListFragment.OnFragmentInteractionListener {
-
+public class ShoppingListActivity extends AppCompatActivity implements ShoppingListFragment.OnFragmentInteractionListener, ShoppingListCreateFragment.OnFragmentInteractionListener, ShoppingListShowFragment.OnFragmentInteractionListener, ProductListFragment.OnFragmentInteractionListener, ShoppingListEditFragment.OnFragmentInteractionListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,5 +73,20 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
         ft.replace(R.id.fragmentContainer, listFragment);
         ft.addToBackStack(null);
         ft.commit();
+    }
+
+    @Override
+    public void onClickEditListButton(ShoppingList shoppingList) {
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        Fragment shoppingListEditFragment = ShoppingListEditFragment.newInstance(shoppingList);
+        ft.replace(R.id.fragmentContainer, shoppingListEditFragment);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
+    @Override
+    public void onClickDeleteListButton(ShoppingList shoppingList) {
+
     }
 }

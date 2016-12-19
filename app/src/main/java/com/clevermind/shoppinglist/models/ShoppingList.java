@@ -12,19 +12,20 @@ public class ShoppingList implements java.io.Serializable {
 
     private Boolean completed;
 
-    public ShoppingList(Integer id, String name){
+    public ShoppingList(Integer id, String name, Boolean completed){
 
         this.id = id;
         this.name = name;
+        this.completed = completed;
 
     }
 
-    public ShoppingList(String name){
+    public ShoppingList(String name, Boolean completed){
 
         this.name = name;
+        this.completed = completed;
 
     }
-
 
     public Integer getId() {
         return id;
@@ -56,6 +57,10 @@ public class ShoppingList implements java.io.Serializable {
 
     public void setCompleted(Boolean completed) {
         this.completed = completed;
+    }
+
+    public Integer getCompletedInt(){
+        return this.completed ? 1 : 0;
     }
 
 }

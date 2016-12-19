@@ -7,6 +7,7 @@ public class ApiConst {
     public static final String URI_SUBSCRIBE = BASE_URI+"account/subscribe.php";
     public static final String URI_LOGIN = BASE_URI+"account/login.php";
     public static final String URI_SHOPPING_LIST_CREATE = BASE_URI+"shopping_list/create.php";
+    public static final String URI_SHOPPING_LIST_EDIT = BASE_URI+"shopping_list/edit.php";
     public static final String URI_SHOPPING_LIST = BASE_URI+"shopping_list/list.php";
     public static final String URI_PRODUCT_LIST = BASE_URI+"product/list.php";
 

@@ -6,8 +6,10 @@
     <string name="app_main_registration">Inscription</string>
     <string name="app_shopping_list">Mes listes de courses</string>
     <string name="app_shopping_list_create">Ajouter une liste</string>
+    <string name="app_shopping_list_edit">Editer une liste</string>
     <string name="app_product_list">Liste des produits</string>
     <string name="app_product_create">Ajouter un produit</string>
+
     <!-- Link / Menu strings -->
     <string name="link_subscribe">Toujours pas inscrit? Je m\'inscris</string>
     <string name="link_login">Déjà inscrit? Je me connecte</string>
@@ -18,6 +20,7 @@
     <string name="form_user_email">E-mail</string>
     <string name="form_user_password">Mot de passe</string>
     <string name="form_shopping_list_name">Nom</string>
+    <string name="form_shopping_list_completed">Complété</string>
 
     <!-- Form errors -->
     <string name="form_user_email_unvalid">Vous devez renseigner un email valide.</string>
@@ -42,6 +45,7 @@
     <string name="message_login_success">Vous êtes maintenant connecté.</string>
     <string name="message_login_failed">Connexion échouée, veuillez vérifier vos identifiants.</string>
     <string name="message_list_successfully_created">Votre liste a bien été crée.</string>ring>
+    <string name="message_list_successfully_edited">Votre liste a bien été éditée.</string>ring>
     <string name="message_app_error_occured">Une erreur est survenue (Code = %s)</string>
     <string name="message_app_no_internet">Vous ne semblez pas être connecté à internet.</string>
 

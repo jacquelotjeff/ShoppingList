@@ -3,6 +3,7 @@ package com.clevermind.shoppinglist.fragments;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,16 +26,24 @@ import com.clevermind.shoppinglist.validators.ShoppingListValidator;
 
 import java.util.HashMap;
 
-public class ShoppingListCreateFragment extends Fragment implements ApiTask.IApiTask {
+public class ShoppingListEditFragment extends Fragment implements ApiTask.IApiTask {
 
     private OnFragmentInteractionListener mListener;
+    private static final String SHOPPING_LIST_CHOICED = "shopping_list";
+    private ShoppingList shoppingList;
 
-    public ShoppingListCreateFragment() {
+    public ShoppingListEditFragment() {
 
     }
 
-    public static ShoppingListCreateFragment newInstance() {
-        ShoppingListCreateFragment fragment = new ShoppingListCreateFragment();
+    public static ShoppingListEditFragment newInstance(ShoppingList shoppingList) {
+
+        ShoppingListEditFragment fragment = new ShoppingListEditFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(SHOPPING_LIST_CHOICED, shoppingList);
+        fragment.setArguments(bundle);
+
         return fragment;
     }
 
@@ -44,51 +53,64 @@ public class ShoppingListCreateFragment extends Fragment implements ApiTask.IApi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        super.onCreate(savedInstanceState);
 
-        View createView =  inflater.inflate(R.layout.fragment_shopping_list_type, container, false);
+        View editView =  inflater.inflate(R.layout.fragment_shopping_list_type, container, false);
 
-        TextView fragmentTitle = (TextView) createView.findViewById(R.id.lblFragmentTitle);
-        fragmentTitle.setText(getResources().getString(R.string.app_shopping_list_create));
+        TextView fragmentTitle = (TextView) editView.findViewById(R.id.lblFragmentTitle);
+        fragmentTitle.setText(getResources().getString(R.string.app_shopping_list_edit));
 
-        Button btnSubmit = (Button) createView.findViewById(R.id.btnSubmit);
+        shoppingList = (ShoppingList) getArguments().getSerializable(SHOPPING_LIST_CHOICED);
+
+        EditText txtName = (EditText) editView.findViewById(R.id.txtBoxName);
+        txtName.setText(shoppingList.getName());
+
+        CheckBox chkBoxCompleted = (CheckBox) editView.findViewById(R.id.chkBoxCompleted);
+        chkBoxCompleted.setChecked(shoppingList.getCompleted());
+
+        Button btnSubmit = (Button) editView.findViewById(R.id.btnSubmit);
+
         btnSubmit.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
 
-            EditText txtName = (EditText) getView().findViewById(R.id.txtBoxName);
-            String name = txtName.getText().toString();
+                EditText txtName = (EditText) getView().findViewById(R.id.txtBoxName);
+                String name = txtName.getText().toString();
+                shoppingList.setName(name);
 
-            CheckBox chkBoxCompleted = (CheckBox) getView().findViewById(R.id.chkBoxCompleted);
-            Boolean completed = chkBoxCompleted.isEnabled();
+                CheckBox chkBoxCompleted = (CheckBox) getView().findViewById(R.id.chkBoxCompleted);
+                Boolean completed = chkBoxCompleted.isChecked();
+                shoppingList.setCompleted(completed);
 
-            ShoppingList shoppingList = new ShoppingList(name, completed);
+                boolean isValid = ShoppingListValidator.validate(shoppingList, getView());
 
-            boolean isValid = ShoppingListValidator.validate(shoppingList, getView());
+                if (isValid) {
 
-            if (isValid) {
-                ApiTask apiRequest = new ApiTask();
-                apiRequest.setListener(ShoppingListCreateFragment.this);
-                apiRequest.execute(buildRequestForCreate(shoppingList));
-            }
+                    ApiTask apiRequest = new ApiTask();
+                    apiRequest.setListener(ShoppingListEditFragment.this);
+                    apiRequest.execute(buildRequestForEdit(shoppingList));
+
+                }
             }
 
         });
 
-        return createView;
+        return editView;
     }
-
-    private Request buildRequestForCreate(ShoppingList shoppingList){
+    private Request buildRequestForEdit(ShoppingList shoppingList){
 
         Request req = new Request();
         req.setMethod(Request.METHOD_GET);
-        req.setUrl(ApiConst.URI_SHOPPING_LIST_CREATE);
+        req.setUrl(ApiConst.URI_SHOPPING_LIST_EDIT);
 
         HashMap<String, String > params = new HashMap<String, String>();
         String token = new UserManager().getTokenUser(this.getActivity());
 
         params.put("token", token);
+        params.put("id", shoppingList.getId().toString());
         params.put("name", shoppingList.getName());
+        params.put("completed", shoppingList.getCompletedInt().toString());
 
         req.setParams(params);
 
@@ -119,7 +141,7 @@ public class ShoppingListCreateFragment extends Fragment implements ApiTask.IApi
         switch (response.getResultCode()) {
             case ApiConst.CODE_OK:
 
-                message = getResources().getString(R.string.message_list_successfully_created);
+                message = getResources().getString(R.string.message_list_successfully_edited);
                 Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
 
                 //Go to list
