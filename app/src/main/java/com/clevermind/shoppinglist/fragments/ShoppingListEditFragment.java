@@ -33,7 +33,6 @@ public class ShoppingListEditFragment extends Fragment implements ApiTask.IApiTa
     private ShoppingList shoppingList;
 
     public ShoppingListEditFragment() {
-
     }
 
     public static ShoppingListEditFragment newInstance(ShoppingList shoppingList) {
@@ -86,11 +85,9 @@ public class ShoppingListEditFragment extends Fragment implements ApiTask.IApiTa
                 boolean isValid = ShoppingListValidator.validate(shoppingList, getView());
 
                 if (isValid) {
-
                     ApiTask apiRequest = new ApiTask();
                     apiRequest.setListener(ShoppingListEditFragment.this);
                     apiRequest.execute(buildRequestForEdit(shoppingList));
-
                 }
             }
 
@@ -140,11 +137,8 @@ public class ShoppingListEditFragment extends Fragment implements ApiTask.IApiTa
         String message = "";
         switch (response.getResultCode()) {
             case ApiConst.CODE_OK:
-
                 message = getResources().getString(R.string.message_list_successfully_edited);
                 Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-
-                //Go to list
                 onClickListButton();
 
                 break;

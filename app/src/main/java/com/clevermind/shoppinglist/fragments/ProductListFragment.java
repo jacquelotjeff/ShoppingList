@@ -124,17 +124,6 @@ public class ProductListFragment extends Fragment implements ApiTask.IApiTask {
             this.showData();
         }
 
-        Button btnLinkListCreate = (Button) listLayout.findViewById(R.id.btnLinkProductCreate);
-
-        btnLinkListCreate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //onClickCreateListButton();
-            }
-
-        });
-
-
         return listLayout;
     }
 
@@ -155,6 +144,5 @@ public class ProductListFragment extends Fragment implements ApiTask.IApiTask {
     }
 
     public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
     }
 }

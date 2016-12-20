@@ -16,15 +16,28 @@
         android:paddingTop="15dp"
         android:paddingBottom="15dp">
 
-        <TextView
-            android:id="@+id/lblName"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.2"
-            android:layout_gravity="center"
-            android:textColor="@color/colorBlack"
-            android:text="My list"
-            android:textSize="18sp" />
+            android:layout_weight="0.2">
+
+            <TextView
+                android:id="@+id/lblName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/colorBlack"
+                android:text="My list"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/lblCompleted"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Completed" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/lblCreatedAt"

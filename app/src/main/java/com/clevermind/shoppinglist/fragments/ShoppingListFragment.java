@@ -81,7 +81,6 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
     }
 
     private void showData() {
-
         mAdapter = new ShoppingListAdapter(this.getActivity(), mList);
 
         ListView listView = (ListView) this.getView().findViewById(R.id.listViewShoppingList);
@@ -98,7 +97,7 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
         });
     }
 
-    public Request buildRequestForList(){
+    public Request buildRequestForList() {
 
         Request request = new Request();
         request.setMethod(Request.METHOD_GET);
@@ -125,7 +124,6 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
     }
 
     public void onApiFinished(ApiTask task, ApiResponse result) {
-
         JSONArray jsonLists = result.getResultArray();
         ShoppingListManager shoppingListManager = new ShoppingListManager();
         mList = shoppingListManager.createFromResultArray(jsonLists);

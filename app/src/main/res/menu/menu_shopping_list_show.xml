@@ -9,6 +9,13 @@
         app_theme:showAsAction="ifRoom">
     </item>
     <item
+        android:id="@+id/action_add"
+        android:icon="@drawable/ic_item_add"
+        android:orderInCategory="2"
+        android:title="@string/app_product_create"
+        app_theme:showAsAction="ifRoom">
+    </item>
+    <item
         android:id="@+id/action_delete"
         android:icon="@drawable/ic_item_delete"
         android:orderInCategory="2"
