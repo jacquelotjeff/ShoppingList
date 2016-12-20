@@ -11,6 +11,9 @@ public class ApiConst {
     public static final String URI_SHOPPING_LIST_REMOVE = BASE_URI+"shopping_list/remove.php";
     public static final String URI_SHOPPING_LIST = BASE_URI+"shopping_list/list.php";
     public static final String URI_PRODUCT_LIST = BASE_URI+"product/list.php";
+    public static final String URI_PRODUCT_CREATE = BASE_URI+"product/create.php";
+    public static final String URI_PRODUCT_EDIT = BASE_URI+"product/edit.php";
+    public static final String URI_PRODUCT_REMOVE = BASE_URI+"product/remove.php";
 
     // Errors code
     public static final String CODE_OK = "0";

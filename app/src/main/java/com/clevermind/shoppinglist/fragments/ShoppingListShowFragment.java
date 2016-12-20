@@ -31,6 +31,7 @@ public class ShoppingListShowFragment extends Fragment implements ApiTask.IApiTa
 
     public interface OnFragmentInteractionListener {
         void onClickEditListButton(ShoppingList shoppingList);
+        void onClickAddProductButton(ShoppingList shoppingList);
         void onClickListButton();
     }
 
@@ -116,6 +117,10 @@ public class ShoppingListShowFragment extends Fragment implements ApiTask.IApiTa
         mListener.onClickEditListButton(shoppingList);
     }
 
+    public void onClickAddProductButton(ShoppingList shoppingList) {
+        mListener.onClickAddProductButton(shoppingList);
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -130,6 +135,8 @@ public class ShoppingListShowFragment extends Fragment implements ApiTask.IApiTa
                 deleteList(shoppingList);
             case R.id.action_edit:
                 onClickEditListButton(shoppingList);
+            case R.id.action_add:
+                onClickAddProductButton(shoppingList);
             default:
                 return super.onOptionsItemSelected(item);
         }

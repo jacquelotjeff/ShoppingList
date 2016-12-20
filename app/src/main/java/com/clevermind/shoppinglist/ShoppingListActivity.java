@@ -7,6 +7,7 @@ import android.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.clevermind.shoppinglist.fragments.ProductCreateFragment;
 import com.clevermind.shoppinglist.fragments.ProductListFragment;
 import com.clevermind.shoppinglist.fragments.ShoppingListCreateFragment;
 import com.clevermind.shoppinglist.fragments.ShoppingListEditFragment;
@@ -19,7 +20,8 @@ public class ShoppingListActivity extends AppCompatActivity implements
         ShoppingListCreateFragment.OnFragmentInteractionListener,
         ShoppingListShowFragment.OnFragmentInteractionListener,
         ProductListFragment.OnFragmentInteractionListener,
-        ShoppingListEditFragment.OnFragmentInteractionListener {
+        ShoppingListEditFragment.OnFragmentInteractionListener,
+        ProductCreateFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,18 +30,15 @@ public class ShoppingListActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_shopping_list);
 
         if (savedInstanceState == null) {
-
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             Fragment shoppingListFragment = new ShoppingListFragment();
             ft.replace(R.id.fragmentContainer, shoppingListFragment, ShoppingListFragment.TAG);
             ft.commit();
-
         }
     }
 
     @Override
     public void onClickCreateListButton() {
-
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         Fragment createListFragment = new ShoppingListCreateFragment();
@@ -59,7 +58,6 @@ public class ShoppingListActivity extends AppCompatActivity implements
         ft.replace(R.id.fragmentContainer, shoppingListShowFragment);
         ft.addToBackStack(null);
         ft.commit();
-
     }
 
     @Override
@@ -78,6 +76,16 @@ public class ShoppingListActivity extends AppCompatActivity implements
         FragmentTransaction ft = fm.beginTransaction();
         Fragment shoppingListEditFragment = ShoppingListEditFragment.newInstance(shoppingList);
         ft.replace(R.id.fragmentContainer, shoppingListEditFragment);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
+    @Override
+    public void onClickAddProductButton(ShoppingList shoppingList) {
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        Fragment productCreateFragment = ProductCreateFragment.newInstance(shoppingList);
+        ft.replace(R.id.fragmentContainer, productCreateFragment);
         ft.addToBackStack(null);
         ft.commit();
     }
