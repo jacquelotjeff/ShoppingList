@@ -1,7 +1,6 @@
 package com.clevermind.shoppinglist.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,12 +51,18 @@ public class ShoppingListAdapter extends BaseAdapter {
         ShoppingList shoppingList = getItem(position);
 
         if (shoppingList != null) {
-
-            Log.d("DEBUG", shoppingList.getId().toString());
-            Log.d("DEBUGGG", shoppingList.getCreatedDate().toString());
             TextView lblName = (TextView) convertView.findViewById(R.id.lblName);
+            TextView lblCompleted = (TextView) convertView.findViewById(R.id.lblCompleted);
             TextView lblCreatedAt = (TextView) convertView.findViewById(R.id.lblCreatedAt);
             lblName.setText(shoppingList.getName());
+
+            String txtCompleted = convertView.getResources().getString(R.string.app_shopping_list_not_completed);
+
+            if (shoppingList.getCompleted()) {
+                txtCompleted = convertView.getResources().getString(R.string.app_shopping_list_completed);
+            }
+
+            lblCompleted.setText(txtCompleted);
 
             try {
                 Format formatter = new SimpleDateFormat("dd/MM/yyyy");

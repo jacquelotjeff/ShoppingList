@@ -3,7 +3,6 @@ package com.clevermind.shoppinglist.fragments;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -11,14 +10,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.clevermind.shoppinglist.R;
-import com.clevermind.shoppinglist.managers.ShoppingListManager;
+import com.clevermind.shoppinglist.managers.UserManager;
 import com.clevermind.shoppinglist.models.ShoppingList;
+import com.clevermind.shoppinglist.network.ApiConst;
+import com.clevermind.shoppinglist.network.ApiResponse;
+import com.clevermind.shoppinglist.network.ApiTask;
+import com.clevermind.shoppinglist.network.Request;
+import com.clevermind.shoppinglist.utils.ErrorFormatter;
 
-public class ShoppingListShowFragment extends Fragment {
+import java.util.HashMap;
+
+public class ShoppingListShowFragment extends Fragment implements ApiTask.IApiTask {
 
     private OnFragmentInteractionListener mListener;
     private static final String SHOPPING_LIST_CHOICED = "shopping_list";
@@ -26,7 +31,7 @@ public class ShoppingListShowFragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
         void onClickEditListButton(ShoppingList shoppingList);
-        void onClickDeleteListButton(ShoppingList shoppingList);
+        void onClickListButton();
     }
 
     public ShoppingListShowFragment() {
@@ -52,7 +57,6 @@ public class ShoppingListShowFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
 
         ViewGroup viewLayout = (ViewGroup) inflater.inflate(R.layout.fragment_shopping_list_show, container, false);
@@ -67,6 +71,29 @@ public class ShoppingListShowFragment extends Fragment {
 
 
         return viewLayout;
+    }
+
+    public void deleteList(ShoppingList shoppingList) {
+        ApiTask apiRequest = new ApiTask();
+        apiRequest.setListener(ShoppingListShowFragment.this);
+        apiRequest.execute(buildRequestForDelete(shoppingList));
+    }
+
+    private Request buildRequestForDelete(ShoppingList shoppingList) {
+
+        Request req = new Request();
+        req.setMethod(Request.METHOD_GET);
+        req.setUrl(ApiConst.URI_SHOPPING_LIST_REMOVE);
+
+        HashMap<String, String> params = new HashMap<String, String>();
+        String token = new UserManager().getTokenUser(this.getActivity());
+
+        params.put("token", token);
+        params.put("id", shoppingList.getId().toString());
+
+        req.setParams(params);
+
+        return req;
     }
 
     @Override
@@ -89,10 +116,6 @@ public class ShoppingListShowFragment extends Fragment {
         mListener.onClickEditListButton(shoppingList);
     }
 
-    public void onClickDeleteListButton(ShoppingList shoppingList) {
-        mListener.onClickDeleteListButton(shoppingList);
-    }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -100,16 +123,31 @@ public class ShoppingListShowFragment extends Fragment {
         inflater.inflate(R.menu.menu_shopping_list_show, menu);
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_delete:
+                deleteList(shoppingList);
             case R.id.action_edit:
                 onClickEditListButton(shoppingList);
-            case R.id.action_delete:
-                onClickDeleteListButton(shoppingList);
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onApiFinished(ApiTask task, ApiResponse response) {
+        String message = "";
+        switch (response.getResultCode()) {
+            case ApiConst.CODE_OK:
+                message = getResources().getString(R.string.message_list_successfully_remove);
+                Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+                mListener.onClickListButton();
+                break;
+            default:
+                message = ErrorFormatter.formatError(getActivity(), response.getResultCode());
+                Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+                break;
         }
     }
 }

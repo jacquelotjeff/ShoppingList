@@ -30,7 +30,6 @@ public class ShoppingListCreateFragment extends Fragment implements ApiTask.IApi
     private OnFragmentInteractionListener mListener;
 
     public ShoppingListCreateFragment() {
-
     }
 
     public static ShoppingListCreateFragment newInstance() {
@@ -43,8 +42,6 @@ public class ShoppingListCreateFragment extends Fragment implements ApiTask.IApi
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-
         View createView =  inflater.inflate(R.layout.fragment_shopping_list_type, container, false);
 
         TextView fragmentTitle = (TextView) createView.findViewById(R.id.lblFragmentTitle);
@@ -118,11 +115,8 @@ public class ShoppingListCreateFragment extends Fragment implements ApiTask.IApi
         String message = "";
         switch (response.getResultCode()) {
             case ApiConst.CODE_OK:
-
                 message = getResources().getString(R.string.message_list_successfully_created);
                 Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-
-                //Go to list
                 onClickListButton();
 
                 break;

@@ -18,6 +18,10 @@ public class ApiTask extends AsyncTask<Request, Void, ApiResponse> {
         this.listener = listener;
     }
 
+    public IApiTask getListener() {
+        return this.listener;
+    }
+
     @Override
     protected ApiResponse doInBackground(Request... requests) {
 

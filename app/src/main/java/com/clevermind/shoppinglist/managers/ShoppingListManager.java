@@ -11,10 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * Created by adrien on 30/11/16.
- */
-
 public class ShoppingListManager {
 
     public ShoppingList createFromResult(JSONObject json){

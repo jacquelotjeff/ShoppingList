@@ -1,12 +1,18 @@
 <resources>
     <!-- App strings -->
+
+    <!-- Main -->
     <string name="app_main_name">Shopping List</string>
     <string name="app_main_welcome">Bienvenue sur Shopping List !</string>
     <string name="app_main_identification">Identification</string>
     <string name="app_main_registration">Inscription</string>
+
+    <!-- Shopping List -->
     <string name="app_shopping_list">Mes listes de courses</string>
     <string name="app_shopping_list_create">Ajouter une liste</string>
     <string name="app_shopping_list_edit">Editer une liste</string>
+    <string name="app_shopping_list_completed">Liste complétée</string>
+    <string name="app_shopping_list_not_completed">Liste non complétée</string>
     <string name="app_product_list">Liste des produits</string>
     <string name="app_product_create">Ajouter un produit</string>
 
