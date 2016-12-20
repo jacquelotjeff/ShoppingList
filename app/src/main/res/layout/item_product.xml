@@ -1,33 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="#e9e9e9"
+        android:orientation="horizontal"
+        android:paddingBottom="15dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="15dp">
 
-        <TextView
-            android:text="TextView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/lblName"
-            android:layout_weight="0.3" />
+            android:layout_weight="0.1"
+            android:orientation="vertical">
 
-        <TextView
-            android:text="TextView"
+            <TextView
+                android:id="@+id/lblName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="My product"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/lblPriceLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/common_price"
+                    android:textAppearance="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/lblPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Price" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/lblQuantityLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@color/colorPrimary"
+                    android:text="@string/common_quantity"/>
+
+                <TextView
+                    android:id="@+id/lblQuantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Quantity" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/lblQuantity"
-            android:layout_weight="0.3" />
+            android:layout_weight="0.3"
+            android:padding="0dp">
 
-        <TextView
-            android:text="TextView"
+            <ImageButton
+                android:id="@+id/button_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:padding="0dp"
+                android:src="@drawable/ic_item_edit" />
+        </FrameLayout>
+
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/lblPrice"
-            android:layout_weight="0.3" />
+            android:layout_weight="0.3"
+            android:padding="0dp">
+
+            <ImageButton
+                android:id="@+id/button_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:padding="0dp"
+                android:src="@drawable/ic_item_delete" />
+        </FrameLayout>
+
     </LinearLayout>
 
 </LinearLayout>

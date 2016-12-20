@@ -9,17 +9,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-/**
- * Created by adrien on 14/12/16.
- */
-
 public class ProductManager {
 
     public Product createFromResult(JSONObject json){
 
         try {
-
-            Product product = new Product(json.getInt("id"), json.getString("name"), json.getInt("quantity"), json.getLong("price"));
+            Product product = new Product(json.getString("name"), json.getInt("quantity"), json.getLong("price"));
 
             return product;
 
