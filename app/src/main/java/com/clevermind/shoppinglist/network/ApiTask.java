@@ -8,7 +8,7 @@ import com.clevermind.shoppinglist.utils.HttpRequest;
 public class ApiTask extends AsyncTask<Request, Void, ApiResponse> {
 
     public interface IApiTask {
-        public void onApiFinished(ApiTask task, ApiResponse result);
+        void onApiFinished(ApiTask task, ApiResponse result);
     }
 
     private Exception exception;

@@ -19,15 +19,13 @@ public class UserManager extends ApiTask {
 
         editor.putString("token", user.getToken());
         editor.commit();
-
     }
 
-    public String getTokenUser(Activity context){
+    public String getTokenUser(Activity context) {
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("SHOP_AUTH", Context.MODE_PRIVATE);
 
         return sharedPreferences.getString("token", "");
-
     }
 
     public User createFromResult(JSONObject json){

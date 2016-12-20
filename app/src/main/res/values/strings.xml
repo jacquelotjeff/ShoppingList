@@ -20,7 +20,7 @@
     <string name="form_user_email">E-mail</string>
     <string name="form_user_password">Mot de passe</string>
     <string name="form_shopping_list_name">Nom</string>
-    <string name="form_shopping_list_completed">Complété</string>
+    <string name="form_shopping_list_completed">Complétée</string>
 
     <!-- Form errors -->
     <string name="form_user_email_unvalid">Vous devez renseigner un email valide.</string>
@@ -46,6 +46,7 @@
     <string name="message_login_failed">Connexion échouée, veuillez vérifier vos identifiants.</string>
     <string name="message_list_successfully_created">Votre liste a bien été crée.</string>ring>
     <string name="message_list_successfully_edited">Votre liste a bien été éditée.</string>ring>
+    <string name="message_list_successfully_remove">Votre liste a bien été supprimée.</string>ring>
     <string name="message_app_error_occured">Une erreur est survenue (Code = %s)</string>
     <string name="message_app_no_internet">Vous ne semblez pas être connecté à internet.</string>
 

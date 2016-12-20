@@ -86,11 +86,9 @@ public class ShoppingListEditFragment extends Fragment implements ApiTask.IApiTa
                 boolean isValid = ShoppingListValidator.validate(shoppingList, getView());
 
                 if (isValid) {
-
                     ApiTask apiRequest = new ApiTask();
                     apiRequest.setListener(ShoppingListEditFragment.this);
                     apiRequest.execute(buildRequestForEdit(shoppingList));
-
                 }
             }
 

@@ -7,9 +7,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public final class ApiResponse {
-
-    public static final String HTTP_REQUEST_BASE = "http://appspaces.fr/esgi/shopping_list/";
-
     private String resultCode;
     private JSONObject result;
 
