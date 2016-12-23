@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -130,6 +131,9 @@ public class ShoppingListShowFragment extends Fragment implements ApiTask.IApiTa
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        // Ce switch ne fonctionne pas : il passe une fois à la ligne 137 mais aussi dans la 142 et dans la 145...
+        /*
         switch (item.getItemId()) {
             case R.id.action_delete:
                 deleteList(shoppingList);
@@ -140,6 +144,20 @@ public class ShoppingListShowFragment extends Fragment implements ApiTask.IApiTa
             default:
                 return super.onOptionsItemSelected(item);
         }
+        */
+
+        Integer id = item.getItemId();
+
+        if (id == R.id.action_delete) {
+            deleteList(shoppingList);
+        } else if (id == R.id.action_edit) {
+            onClickEditListButton(shoppingList);
+        } else if (id == R.id.action_add) {
+            onClickAddProductButton(shoppingList);
+        }
+
+        return super.onOptionsItemSelected(item);
+
     }
 
     @Override
