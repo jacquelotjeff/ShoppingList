@@ -39,8 +39,7 @@
                     android:id="@+id/lblPriceLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/common_price"
-                    android:textAppearance="@color/colorPrimary" />
+                    android:text="@string/common_price"/>
 
                 <TextView
                     android:id="@+id/lblPrice"
@@ -59,7 +58,6 @@
                     android:id="@+id/lblQuantityLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="@color/colorPrimary"
                     android:text="@string/common_quantity"/>
 
                 <TextView
