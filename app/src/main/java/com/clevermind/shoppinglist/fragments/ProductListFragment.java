@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.clevermind.shoppinglist.R;
 import com.clevermind.shoppinglist.adapters.ProductAdapter;
@@ -25,10 +26,12 @@ import com.clevermind.shoppinglist.network.ApiConst;
 import com.clevermind.shoppinglist.network.ApiResponse;
 import com.clevermind.shoppinglist.network.ApiTask;
 import com.clevermind.shoppinglist.network.Request;
+import com.clevermind.shoppinglist.utils.ErrorFormatter;
 
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ProductListFragment extends Fragment implements ApiTask.IApiTask, View.OnClickListener {
 
@@ -37,6 +40,9 @@ public class ProductListFragment extends Fragment implements ApiTask.IApiTask, V
     private ShoppingList shoppingList;
     private ApiTask apiRequest;
     private static final String STATE_LIST = "list";
+
+    private static final String TASK_LIST = "task_list";
+    private static final String TASK_DELETE = "task_delete";
 
     private OnFragmentInteractionListener mListener;
 
@@ -71,12 +77,55 @@ public class ProductListFragment extends Fragment implements ApiTask.IApiTask, V
         return request;
     }
 
+    private Request buildRequestForDelete(Product product) {
+
+        Request req = new Request();
+        req.setMethod(Request.METHOD_GET);
+        req.setUrl(ApiConst.URI_PRODUCT_REMOVE);
+
+        HashMap<String, String> params = new HashMap<String, String>();
+        String token = new UserManager().getTokenUser(this.getActivity());
+
+        params.put("token", token);
+        params.put("id", product.getId().toString());
+
+        req.setParams(params);
+
+        return req;
+    }
+
     public void onApiFinished(ApiTask task, ApiResponse result) {
 
-        JSONArray jsonLists = result.getResultArray();
-        ProductManager productManager = new ProductManager();
-        mList = productManager.createFromResultArray(jsonLists, shoppingList);
-        this.showData();
+        switch (task.getId()) {
+            case TASK_LIST :
+
+                JSONArray jsonLists = result.getResultArray();
+                ProductManager productManager = new ProductManager();
+                mList = productManager.createFromResultArray(jsonLists, shoppingList);
+                this.showData();
+
+                break;
+
+            case TASK_DELETE:
+
+                String message = "";
+                switch (result.getResultCode()) {
+                    case ApiConst.CODE_OK:
+
+                        message = getResources().getString(R.string.message_product_successfully_remove);
+                        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+                        onClickShowButton(shoppingList);
+
+                        break;
+                    default:
+                        message = ErrorFormatter.formatError(getActivity(), result.getResultCode());
+                        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+                        break;
+                }
+
+                break;
+        }
+
 
     }
 
@@ -95,9 +144,15 @@ public class ProductListFragment extends Fragment implements ApiTask.IApiTask, V
         switch (v.getId()) {
             case R.id.button_edit:
                 onClickEditProductButton((Product) v.getTag());
-                Log.d("DEBVUG", "Edit product");
+                break;
             case R.id.button_delete:
-                Log.d("DEBVUG", "Delete product");
+
+                ApiTask apiRequest = new ApiTask();
+                apiRequest.setId(TASK_DELETE);
+                apiRequest.setListener(ProductListFragment.this);
+                apiRequest.execute(buildRequestForDelete((Product) v.getTag()));
+
+                break;
         }
     }
 
@@ -121,6 +176,7 @@ public class ProductListFragment extends Fragment implements ApiTask.IApiTask, V
         if (savedInstanceState == null) {
 
             apiRequest = new ApiTask();
+            apiRequest.setId(TASK_LIST);
             apiRequest.setListener(ProductListFragment.this);
             apiRequest.execute(buildRequestForList());
 
@@ -150,9 +206,14 @@ public class ProductListFragment extends Fragment implements ApiTask.IApiTask, V
 
     public interface OnFragmentInteractionListener {
         void onClickEditProductButton(Product product);
+        void onClickShowButton(ShoppingList shoppingList);
     }
 
     public void onClickEditProductButton(Product product) {
         mListener.onClickEditProductButton(product);
+    }
+
+    public void onClickShowButton(ShoppingList shoppingList) {
+        mListener.onClickShowButton(shoppingList);
     }
 }

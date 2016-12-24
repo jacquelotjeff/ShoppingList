@@ -13,6 +13,7 @@ public class ApiTask extends AsyncTask<Request, Void, ApiResponse> {
 
     private Exception exception;
     private IApiTask listener;
+    private String id;
 
     public void setListener(IApiTask listener) {
         this.listener = listener;
@@ -46,4 +47,8 @@ public class ApiTask extends AsyncTask<Request, Void, ApiResponse> {
     protected void onPostExecute(ApiResponse result) {
         this.listener.onApiFinished(this, result);
     }
+
+    public String getId(){ return this.id; }
+
+    public void setId(String id){ this.id = id; }
 }

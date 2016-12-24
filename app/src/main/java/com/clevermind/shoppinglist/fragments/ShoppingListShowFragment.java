@@ -132,28 +132,17 @@ public class ShoppingListShowFragment extends Fragment implements ApiTask.IApiTa
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        // Ce switch ne fonctionne pas : il passe une fois à la ligne 137 mais aussi dans la 142 et dans la 145...
-        /*
+        // Ce switch aurait fonctionnait si JEFF avait mis des BREAKS !!!
         switch (item.getItemId()) {
             case R.id.action_delete:
                 deleteList(shoppingList);
+                break;
             case R.id.action_edit:
                 onClickEditListButton(shoppingList);
+                break;
             case R.id.action_add:
                 onClickAddProductButton(shoppingList);
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-        */
-
-        Integer id = item.getItemId();
-
-        if (id == R.id.action_delete) {
-            deleteList(shoppingList);
-        } else if (id == R.id.action_edit) {
-            onClickEditListButton(shoppingList);
-        } else if (id == R.id.action_add) {
-            onClickAddProductButton(shoppingList);
+                break;
         }
 
         return super.onOptionsItemSelected(item);

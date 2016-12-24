@@ -31,7 +31,7 @@ public final class ApiResponse {
             return this.result.getJSONArray("result");
         } catch (JSONException e) {
             e.printStackTrace();
-            return null;
+            return new JSONArray();
         }
     }
 
