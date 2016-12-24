@@ -17,6 +17,7 @@
     <!-- Product -->
     <string name="app_product_list">Liste des produits</string>
     <string name="app_product_create">Ajouter un produit</string>
+    <string name="app_product_edit">Editer un produit</string>
 
     <!-- Link / Menu strings -->create
     <string name="link_subscribe">Toujours pas inscrit? Je m\'inscris</string>
@@ -70,5 +71,8 @@
     <string name="message_product_successfully_remove">Votre produit a bien été supprimé.</string>
     <string name="message_app_error_occured">Une erreur est survenue (Code = %s)</string>
     <string name="message_app_no_internet">Vous ne semblez pas être connecté à internet.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

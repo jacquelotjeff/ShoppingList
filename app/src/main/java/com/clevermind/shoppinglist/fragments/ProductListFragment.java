@@ -5,11 +5,13 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -28,7 +30,7 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 
-public class ProductListFragment extends Fragment implements ApiTask.IApiTask {
+public class ProductListFragment extends Fragment implements ApiTask.IApiTask, View.OnClickListener {
 
     private static final String SHOPPING_LIST_CHOICED = "shopping_list";
 
@@ -73,27 +75,30 @@ public class ProductListFragment extends Fragment implements ApiTask.IApiTask {
 
         JSONArray jsonLists = result.getResultArray();
         ProductManager productManager = new ProductManager();
-        mList = productManager.createFromResultArray(jsonLists);
+        mList = productManager.createFromResultArray(jsonLists, shoppingList);
         this.showData();
 
     }
 
     private void showData() {
 
-        mAdapter = new ProductAdapter(this.getActivity(), mList);
+        mAdapter = new ProductAdapter(this.getActivity(), mList, this);
 
         ListView listView = (ListView) this.getView().findViewById(R.id.listViewProduct);
         listView.setAdapter(mAdapter);
         listView.deferNotifyDataSetChanged();
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Product product = (Product) mAdapter.getItem(i);
-                //onClickShowButton(product);
-            }
-        });
+    }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.button_edit:
+                onClickEditProductButton((Product) v.getTag());
+                Log.d("DEBVUG", "Edit product");
+            case R.id.button_delete:
+                Log.d("DEBVUG", "Delete product");
+        }
     }
 
     @Override
@@ -144,5 +149,10 @@ public class ProductListFragment extends Fragment implements ApiTask.IApiTask {
     }
 
     public interface OnFragmentInteractionListener {
+        void onClickEditProductButton(Product product);
+    }
+
+    public void onClickEditProductButton(Product product) {
+        mListener.onClickEditProductButton(product);
     }
 }

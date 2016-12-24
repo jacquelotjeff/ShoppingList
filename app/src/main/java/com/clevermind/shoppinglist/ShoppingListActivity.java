@@ -8,11 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.clevermind.shoppinglist.fragments.ProductCreateFragment;
+import com.clevermind.shoppinglist.fragments.ProductEditFragment;
 import com.clevermind.shoppinglist.fragments.ProductListFragment;
 import com.clevermind.shoppinglist.fragments.ShoppingListCreateFragment;
 import com.clevermind.shoppinglist.fragments.ShoppingListEditFragment;
 import com.clevermind.shoppinglist.fragments.ShoppingListFragment;
 import com.clevermind.shoppinglist.fragments.ShoppingListShowFragment;
+import com.clevermind.shoppinglist.models.Product;
 import com.clevermind.shoppinglist.models.ShoppingList;
 
 public class ShoppingListActivity extends AppCompatActivity implements
@@ -21,7 +23,8 @@ public class ShoppingListActivity extends AppCompatActivity implements
         ShoppingListShowFragment.OnFragmentInteractionListener,
         ProductListFragment.OnFragmentInteractionListener,
         ShoppingListEditFragment.OnFragmentInteractionListener,
-        ProductCreateFragment.OnFragmentInteractionListener {
+        ProductCreateFragment.OnFragmentInteractionListener,
+        ProductEditFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +89,16 @@ public class ShoppingListActivity extends AppCompatActivity implements
         FragmentTransaction ft = fm.beginTransaction();
         Fragment productCreateFragment = ProductCreateFragment.newInstance(shoppingList);
         ft.replace(R.id.fragmentContainer, productCreateFragment);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
+    @Override
+    public void onClickEditProductButton(Product product) {
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        Fragment productEditFragment = ProductEditFragment.newInstance(product);
+        ft.replace(R.id.fragmentContainer, productEditFragment);
         ft.addToBackStack(null);
         ft.commit();
     }
