@@ -2,7 +2,7 @@ package com.clevermind.shoppinglist.models;
 
 import java.util.Date;
 
-public class Product {
+public class Product implements java.io.Serializable {
 
     private Integer id;
 
@@ -11,6 +11,8 @@ public class Product {
     private Integer quantity;
 
     private float price;
+
+    private ShoppingList shoppingList;
 
     public Product(Integer id, String name, Integer quantity, float price){
         this.id = id;
@@ -55,6 +57,14 @@ public class Product {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public ShoppingList getShoppingList() {
+        return shoppingList;
+    }
+
+    public void setShoppingList(ShoppingList shoppingList) {
+        this.shoppingList = shoppingList;
     }
 
 }

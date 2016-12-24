@@ -1,10 +1,13 @@
 package com.clevermind.shoppinglist.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.clevermind.shoppinglist.R;
@@ -21,8 +24,10 @@ public class ProductAdapter  extends BaseAdapter {
 
     private ArrayList<Product> products;
     private LayoutInflater mInflater;
+    private View.OnClickListener mListener;
 
-    public ProductAdapter(Context context, ArrayList<Product> products){
+    public ProductAdapter(Context context, ArrayList<Product> products, View.OnClickListener mListener){
+        this.mListener = mListener;
         this.products = products;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -43,7 +48,7 @@ public class ProductAdapter  extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup viewGroup) {
+    public View getView(final int position, View convertView, ViewGroup viewGroup) {
 
         if (convertView == null) {
 
@@ -63,9 +68,18 @@ public class ProductAdapter  extends BaseAdapter {
             lblPrice.setText(product.getQuantity().toString());
             lblCreatedAt.setText(String.valueOf(product.getPrice()));
 
+            ImageButton btnEdit = (ImageButton) convertView.findViewById(R.id.button_edit);
+            btnEdit.setTag(getItem(position));
+            btnEdit.setOnClickListener(mListener);
+
+            ImageButton btnDelete = (ImageButton) convertView.findViewById(R.id.button_delete);
+            btnDelete.setTag(getItem(position));
+            btnDelete.setOnClickListener(mListener);
+
         }
 
         return convertView;
     }
 
 }
+

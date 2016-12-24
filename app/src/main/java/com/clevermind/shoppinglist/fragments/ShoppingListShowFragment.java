@@ -75,12 +75,6 @@ public class ShoppingListShowFragment extends Fragment implements ApiTask.IApiTa
         return viewLayout;
     }
 
-    public void deleteList(ShoppingList shoppingList) {
-        ApiTask apiRequest = new ApiTask();
-        apiRequest.setListener(ShoppingListShowFragment.this);
-        apiRequest.execute(buildRequestForDelete(shoppingList));
-    }
-
     private Request buildRequestForDelete(ShoppingList shoppingList) {
 
         Request req = new Request();
@@ -120,6 +114,12 @@ public class ShoppingListShowFragment extends Fragment implements ApiTask.IApiTa
 
     public void onClickAddProductButton(ShoppingList shoppingList) {
         mListener.onClickAddProductButton(shoppingList);
+    }
+
+    public void deleteList(ShoppingList shoppingList) {
+        ApiTask apiRequest = new ApiTask();
+        apiRequest.setListener(ShoppingListShowFragment.this);
+        apiRequest.execute(buildRequestForDelete(shoppingList));
     }
 
     @Override

@@ -14,7 +14,8 @@ public class ProductManager {
     public Product createFromResult(JSONObject json){
 
         try {
-            Product product = new Product(json.getString("name"), json.getInt("quantity"), json.getLong("price"));
+
+            Product product = new Product(json.getInt("id"), json.getString("name"), json.getInt("quantity"), json.getLong("price"));
 
             return product;
 
@@ -25,15 +26,23 @@ public class ProductManager {
         }
     }
 
-    public ArrayList<Product> createFromResultArray(JSONArray productArray){
+    public ArrayList<Product> createFromResultArray(JSONArray productArray, ShoppingList shoppingList){
 
         ArrayList<Product> list = new ArrayList<Product>();
 
         for (int i=0; i<productArray.length(); i++) {
 
             try {
-                JSONObject shoppingListObject = productArray.getJSONObject(i);
-                list.add(createFromResult(shoppingListObject));
+
+                JSONObject productObject = productArray.getJSONObject(i);
+
+                Product product = createFromResult(productObject);
+                if (shoppingList != null) {
+                    product.setShoppingList(shoppingList);
+                }
+
+                list.add(product);
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
