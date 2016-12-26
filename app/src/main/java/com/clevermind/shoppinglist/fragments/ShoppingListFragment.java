@@ -66,20 +66,35 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
         // On configuration changes save the state and no API calls
         if (savedInstanceState == null) {
 
-            apiRequest = new ApiTask();
-            apiRequest.setListener(ShoppingListFragment.this);
-            apiRequest.execute(buildRequestForList());
+            executeRequest();
 
         } else {
+
             mList = (ArrayList<ShoppingList>) savedInstanceState.getSerializable(STATE_LIST);
-            this.showData();
+
+            if(mList == null) {
+
+                executeRequest();
+
+            } else {
+
+                this.showData();
+
+            }
         }
 
         return mListView;
 
     }
 
+    private void executeRequest(){
+        apiRequest = new ApiTask();
+        apiRequest.setListener(ShoppingListFragment.this);
+        apiRequest.execute(buildRequestForList());
+    }
+
     private void showData() {
+
         mAdapter = new ShoppingListAdapter(this.getActivity(), mList);
 
         ListView listView = (ListView) this.mListView.findViewById(R.id.listViewShoppingList);
