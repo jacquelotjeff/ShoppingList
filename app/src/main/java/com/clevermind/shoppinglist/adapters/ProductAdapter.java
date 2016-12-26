@@ -61,12 +61,12 @@ public class ProductAdapter  extends BaseAdapter {
         if (product != null) {
 
             TextView lblName = (TextView) convertView.findViewById(R.id.lblName);
-            TextView lblCreatedAt = (TextView) convertView.findViewById(R.id.lblQuantity);
+            TextView lblQuantity = (TextView) convertView.findViewById(R.id.lblQuantity);
             TextView lblPrice = (TextView) convertView.findViewById(R.id.lblPrice);
 
             lblName.setText(product.getName());
-            lblPrice.setText(product.getQuantity().toString());
-            lblCreatedAt.setText(String.valueOf(product.getPrice()));
+            lblPrice.setText(String.valueOf(product.getPrice())+" €");
+            lblQuantity.setText(product.getQuantity().toString());
 
             ImageButton btnEdit = (ImageButton) convertView.findViewById(R.id.button_edit);
             btnEdit.setTag(getItem(position));
