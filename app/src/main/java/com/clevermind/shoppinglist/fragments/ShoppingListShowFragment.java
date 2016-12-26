@@ -47,7 +47,6 @@ public class ShoppingListShowFragment extends Fragment implements ApiTask.IApiTa
         bundle.putSerializable(SHOPPING_LIST_CHOICED, shoppingList);
         fragment.setArguments(bundle);
 
-
         return fragment;
     }
 

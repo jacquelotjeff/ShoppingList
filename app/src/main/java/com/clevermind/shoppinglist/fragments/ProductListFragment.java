@@ -39,12 +39,13 @@ public class ProductListFragment extends Fragment implements ApiTask.IApiTask, V
 
     private ShoppingList shoppingList;
     private ApiTask apiRequest;
-    private static final String STATE_LIST = "list";
+    private static final String STATE_LIST_PRODUCT = "list";
 
     private static final String TASK_LIST = "task_list";
     private static final String TASK_DELETE = "task_delete";
 
     private OnFragmentInteractionListener mListener;
+    private View mListView;
 
     private ArrayList<Product> mList;
     private ListAdapter mAdapter;
@@ -62,6 +63,33 @@ public class ProductListFragment extends Fragment implements ApiTask.IApiTask, V
         fragment.setArguments(bundle);
 
         return fragment;
+    }
+
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+
+        this.mListView = inflater.inflate(R.layout.fragment_product_list, container, false);
+
+        shoppingList = (ShoppingList) getArguments().getSerializable(SHOPPING_LIST_CHOICED);
+
+        // On configuration changes save the state and no API calls
+        if (savedInstanceState == null) {
+
+            apiRequest = new ApiTask();
+            apiRequest.setId(TASK_LIST);
+            apiRequest.setListener(ProductListFragment.this);
+            apiRequest.execute(buildRequestForList());
+
+        } else {
+            mList = (ArrayList<Product>) savedInstanceState.getSerializable(STATE_LIST_PRODUCT);
+            this.showData();
+        }
+
+        return this.mListView;
     }
 
     public Request buildRequestForList(){
@@ -95,10 +123,8 @@ public class ProductListFragment extends Fragment implements ApiTask.IApiTask, V
     }
 
     public void onApiFinished(ApiTask task, ApiResponse result) {
-
         switch (task.getId()) {
             case TASK_LIST :
-
                 JSONArray jsonLists = result.getResultArray();
                 ProductManager productManager = new ProductManager();
                 mList = productManager.createFromResultArray(jsonLists, shoppingList);
@@ -107,7 +133,6 @@ public class ProductListFragment extends Fragment implements ApiTask.IApiTask, V
                 break;
 
             case TASK_DELETE:
-
                 String message = "";
                 switch (result.getResultCode()) {
                     case ApiConst.CODE_OK:
@@ -133,7 +158,7 @@ public class ProductListFragment extends Fragment implements ApiTask.IApiTask, V
 
         mAdapter = new ProductAdapter(this.getActivity(), mList, this);
 
-        ListView listView = (ListView) this.getView().findViewById(R.id.listViewProduct);
+        ListView listView = (ListView) this.mListView.findViewById(R.id.listViewProduct);
         listView.setAdapter(mAdapter);
         listView.deferNotifyDataSetChanged();
 
@@ -164,31 +189,6 @@ public class ProductListFragment extends Fragment implements ApiTask.IApiTask, V
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-
-        View listLayout = inflater.inflate(R.layout.fragment_product_list, container, false);
-
-        shoppingList = (ShoppingList) getArguments().getSerializable(SHOPPING_LIST_CHOICED);
-
-        // On configuration changes save the state and no API calls
-        if (savedInstanceState == null) {
-
-            apiRequest = new ApiTask();
-            apiRequest.setId(TASK_LIST);
-            apiRequest.setListener(ProductListFragment.this);
-            apiRequest.execute(buildRequestForList());
-
-        } else {
-            mList = (ArrayList<Product>) savedInstanceState.getSerializable(STATE_LIST);
-            this.showData();
-        }
-
-        return listLayout;
-    }
-
-    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
@@ -196,6 +196,12 @@ public class ProductListFragment extends Fragment implements ApiTask.IApiTask, V
         } else {
             throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(STATE_LIST_PRODUCT, mList);
     }
 
     @Override

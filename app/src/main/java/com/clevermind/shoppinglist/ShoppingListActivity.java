@@ -27,6 +27,11 @@ public class ShoppingListActivity extends AppCompatActivity implements
         ProductEditFragment.OnFragmentInteractionListener {
 
     @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -39,6 +44,7 @@ public class ShoppingListActivity extends AppCompatActivity implements
             ft.commit();
         }
     }
+
 
     @Override
     public void onClickCreateListButton() {
