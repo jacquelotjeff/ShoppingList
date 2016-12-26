@@ -38,6 +38,7 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
     public static final String TAG = "shopping_list_fragment";
 
     private ArrayList<ShoppingList> mList;
+    private View mListView;
 
     public interface OnFragmentInteractionListener {
         void onClickCreateListButton();
@@ -45,7 +46,6 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
     }
 
     public ShoppingListFragment() {
-
     }
 
     public static ShoppingListFragment newInstance() {
@@ -61,29 +61,43 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View listLayout = inflater.inflate(R.layout.fragment_shopping_list, container, false);
+        this.mListView = inflater.inflate(R.layout.fragment_shopping_list, container, false);
         getActivity().setTitle(R.string.app_shopping_list);
         // On configuration changes save the state and no API calls
         if (savedInstanceState == null) {
 
-            apiRequest = new ApiTask();
-            apiRequest.setListener(ShoppingListFragment.this);
-            apiRequest.execute(buildRequestForList());
+            executeRequest();
 
         } else {
 
             mList = (ArrayList<ShoppingList>) savedInstanceState.getSerializable(STATE_LIST);
-            this.showData();
+
+            if(mList == null) {
+
+                executeRequest();
+
+            } else {
+
+                this.showData();
+
+            }
         }
 
-        return listLayout;
+        return mListView;
 
     }
 
+    private void executeRequest(){
+        apiRequest = new ApiTask();
+        apiRequest.setListener(ShoppingListFragment.this);
+        apiRequest.execute(buildRequestForList());
+    }
+
     private void showData() {
+
         mAdapter = new ShoppingListAdapter(this.getActivity(), mList);
 
-        ListView listView = (ListView) this.getView().findViewById(R.id.listViewShoppingList);
+        ListView listView = (ListView) this.mListView.findViewById(R.id.listViewShoppingList);
         listView.setAdapter(mAdapter);
         listView.setClickable(true);
         listView.deferNotifyDataSetChanged();
