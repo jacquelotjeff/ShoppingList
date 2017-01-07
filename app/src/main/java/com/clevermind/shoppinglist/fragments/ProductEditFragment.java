@@ -137,24 +137,30 @@ public class ProductEditFragment extends Fragment implements ApiTask.IApiTask {
     @Override
     public void onApiFinished(ApiTask task, ApiResponse response) {
         String message = "";
-        switch (response.getResultCode()) {
-            case ApiConst.CODE_OK:
 
-                message = getResources().getString(R.string.message_product_successfully_edited);
-                Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-                onClickShowButton(product.getShoppingList());
+        // Prevent disconnected
+        if (response == null) {
+            message = getResources().getString(R.string.network_not_available);
+            Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+        } else {
+            switch (response.getResultCode()) {
+                case ApiConst.CODE_OK:
 
-                break;
+                    message = getResources().getString(R.string.message_product_successfully_edited);
+                    Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+                    onClickShowButton(product.getShoppingList());
 
-            default:
+                    break;
 
-                message = ErrorFormatter.formatError(getActivity(), response.getResultCode());
-                Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-                onClickShowButton(product.getShoppingList());
+                default:
 
-                break;
+                    message = ErrorFormatter.formatError(getActivity(), response.getResultCode());
+                    Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+                    onClickShowButton(product.getShoppingList());
+
+                    break;
+            }
         }
-
     }
 
     public void onClickShowButton(ShoppingList shoppingList) {

@@ -47,14 +47,16 @@ public class ShoppingListEditFragment extends Fragment implements ApiTask.IApiTa
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
-        View editView =  inflater.inflate(R.layout.fragment_shopping_list_type, container, false);
+        View editView = inflater.inflate(R.layout.fragment_shopping_list_type, container, false);
 
         TextView fragmentTitle = (TextView) editView.findViewById(R.id.lblFragmentTitle);
         fragmentTitle.setText(getResources().getString(R.string.app_shopping_list_edit));
@@ -95,13 +97,14 @@ public class ShoppingListEditFragment extends Fragment implements ApiTask.IApiTa
 
         return editView;
     }
-    private Request buildRequestForEdit(ShoppingList shoppingList){
+
+    private Request buildRequestForEdit(ShoppingList shoppingList) {
 
         Request req = new Request();
         req.setMethod(Request.METHOD_GET);
         req.setUrl(ApiConst.URI_SHOPPING_LIST_EDIT);
 
-        HashMap<String, String > params = new HashMap<String, String>();
+        HashMap<String, String> params = new HashMap<String, String>();
         String token = new UserManager().getTokenUser(this.getActivity());
 
         params.put("token", token);
@@ -133,21 +136,26 @@ public class ShoppingListEditFragment extends Fragment implements ApiTask.IApiTa
 
     @Override
     public void onApiFinished(ApiTask task, ApiResponse response) {
-
         String message = "";
-        switch (response.getResultCode()) {
-            case ApiConst.CODE_OK:
-                message = getResources().getString(R.string.message_list_successfully_edited);
-                Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-                onClickListButton();
 
-                break;
-            default:
-                message = ErrorFormatter.formatError(getActivity(), response.getResultCode());
-                Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-                break;
+        // Prevent disconnected
+        if (response == null) {
+            message = getResources().getString(R.string.network_not_available);
+            Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+        } else {
+            switch (response.getResultCode()) {
+                case ApiConst.CODE_OK:
+                    message = getResources().getString(R.string.message_list_successfully_edited);
+                    Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+                    onClickListButton();
+
+                    break;
+                default:
+                    message = ErrorFormatter.formatError(getActivity(), response.getResultCode());
+                    Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+                    break;
+            }
         }
-
     }
 
     public void onClickListButton() {

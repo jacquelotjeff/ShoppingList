@@ -151,16 +151,23 @@ public class ShoppingListShowFragment extends Fragment implements ApiTask.IApiTa
     @Override
     public void onApiFinished(ApiTask task, ApiResponse response) {
         String message = "";
-        switch (response.getResultCode()) {
-            case ApiConst.CODE_OK:
-                message = getResources().getString(R.string.message_list_successfully_remove);
-                Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-                mListener.onClickListButton();
-                break;
-            default:
-                message = ErrorFormatter.formatError(getActivity(), response.getResultCode());
-                Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-                break;
+
+        // Prevent disconnected
+        if (response == null) {
+            message = getResources().getString(R.string.network_not_available);
+            Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+        } else {
+            switch (response.getResultCode()) {
+                case ApiConst.CODE_OK:
+                    message = getResources().getString(R.string.message_list_successfully_remove);
+                    Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+                    mListener.onClickListButton();
+                    break;
+                default:
+                    message = ErrorFormatter.formatError(getActivity(), response.getResultCode());
+                    Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+                    break;
+            }
         }
     }
 }

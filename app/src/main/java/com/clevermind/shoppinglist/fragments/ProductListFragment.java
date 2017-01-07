@@ -66,7 +66,6 @@ public class ProductListFragment extends Fragment implements ApiTask.IApiTask, V
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -92,7 +91,7 @@ public class ProductListFragment extends Fragment implements ApiTask.IApiTask, V
         return this.mListView;
     }
 
-    public Request buildRequestForList(){
+    public Request buildRequestForList() {
 
         Request request = new Request();
 
@@ -123,35 +122,38 @@ public class ProductListFragment extends Fragment implements ApiTask.IApiTask, V
     }
 
     public void onApiFinished(ApiTask task, ApiResponse result) {
-        switch (task.getId()) {
-            case TASK_LIST :
-                JSONArray jsonLists = result.getResultArray();
-                ProductManager productManager = new ProductManager();
-                mList = productManager.createFromResultArray(jsonLists, shoppingList);
-                this.showData();
+        // Prevent disconnected
+        if (result == null) {
+            String message = getResources().getString(R.string.network_not_available);
+            Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+        } else {
+            switch (task.getId()) {
+                case TASK_LIST:
+                    JSONArray jsonLists = result.getResultArray();
+                    ProductManager productManager = new ProductManager();
+                    mList = productManager.createFromResultArray(jsonLists, shoppingList);
+                    this.showData();
 
-                break;
+                    break;
 
-            case TASK_DELETE:
-                String message = "";
-                switch (result.getResultCode()) {
-                    case ApiConst.CODE_OK:
+                case TASK_DELETE:
+                    String message = "";
+                    switch (result.getResultCode()) {
+                        case ApiConst.CODE_OK:
 
-                        message = getResources().getString(R.string.message_product_successfully_remove);
-                        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-                        onClickShowButton(shoppingList);
+                            message = getResources().getString(R.string.message_product_successfully_remove);
+                            Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+                            onClickShowButton(shoppingList);
 
-                        break;
-                    default:
-                        message = ErrorFormatter.formatError(getActivity(), result.getResultCode());
-                        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-                        break;
-                }
-
-                break;
+                            break;
+                        default:
+                            message = ErrorFormatter.formatError(getActivity(), result.getResultCode());
+                            Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+                            break;
+                    }
+                    break;
+            }
         }
-
-
     }
 
     private void showData() {
@@ -212,6 +214,7 @@ public class ProductListFragment extends Fragment implements ApiTask.IApiTask, V
 
     public interface OnFragmentInteractionListener {
         void onClickEditProductButton(Product product);
+
         void onClickShowButton(ShoppingList shoppingList);
     }
 
