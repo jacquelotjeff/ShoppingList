@@ -123,30 +123,36 @@ public class LoginFragment extends Fragment implements ApiTask.IApiTask {
     public void onApiFinished(ApiTask task, ApiResponse response) {
 
         String message = "";
-        switch (response.getResultCode()) {
-            case ApiConst.CODE_OK:
 
-                UserManager userManager = new UserManager();
-                User user = userManager.createFromResult(response.getResultObject());
-                userManager.logUser(user, this.getActivity());
+        // Prevent disconnected
+        if (response == null) {
+            message = getResources().getString(R.string.network_not_available);
+            Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+        } else {
+            switch (response.getResultCode()) {
+                case ApiConst.CODE_OK:
 
-                Intent intent = new Intent(this.getActivity(), ShoppingListActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+                    UserManager userManager = new UserManager();
+                    User user = userManager.createFromResult(response.getResultObject());
+                    userManager.logUser(user, this.getActivity());
 
-                message = getResources().getString(R.string.message_login_success);
-                Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-                break;
-            case ApiConst.CODE_LOGIN_FAILED:
-                message = getResources().getString(R.string.message_login_failed);
-                Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-                break;
-            default:
-                message = ErrorFormatter.formatError(getActivity(), response.getResultCode());
-                Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-                break;
+                    Intent intent = new Intent(this.getActivity(), ShoppingListActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+
+                    message = getResources().getString(R.string.message_login_success);
+                    Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+                    break;
+                case ApiConst.CODE_LOGIN_FAILED:
+                    message = getResources().getString(R.string.message_login_failed);
+                    Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+                    break;
+                default:
+                    message = ErrorFormatter.formatError(getActivity(), response.getResultCode());
+                    Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+                    break;
+            }
         }
-
     }
 
     private boolean validForm(String mail, String password) {

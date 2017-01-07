@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.clevermind.shoppinglist.R;
 import com.clevermind.shoppinglist.adapters.ShoppingListAdapter;
@@ -65,9 +66,7 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
         getActivity().setTitle(R.string.app_shopping_list);
         // On configuration changes save the state and no API calls
         if (savedInstanceState == null) {
-
             executeRequest();
-
         } else {
 
             mList = (ArrayList<ShoppingList>) savedInstanceState.getSerializable(STATE_LIST);
@@ -138,11 +137,16 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
     }
 
     public void onApiFinished(ApiTask task, ApiResponse result) {
-        JSONArray jsonLists = result.getResultArray();
-        ShoppingListManager shoppingListManager = new ShoppingListManager();
-        mList = shoppingListManager.createFromResultArray(jsonLists);
-        this.showData();
-
+        // Prevent disconnected
+        if (result == null) {
+            String message = getResources().getString(R.string.network_not_available);
+            Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+        } else {
+            JSONArray jsonLists = result.getResultArray();
+            ShoppingListManager shoppingListManager = new ShoppingListManager();
+            mList = shoppingListManager.createFromResultArray(jsonLists);
+            this.showData();
+        }
     }
 
     @Override

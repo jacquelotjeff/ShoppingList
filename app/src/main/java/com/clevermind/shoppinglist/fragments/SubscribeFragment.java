@@ -131,28 +131,35 @@ public class SubscribeFragment extends Fragment implements ApiTask.IApiTask {
 
     @Override
     public void onApiFinished(ApiTask task, ApiResponse response) {
-        String message = "";
-        switch (response.getResultCode()) {
-            case ApiConst.CODE_OK:
 
-                UserManager userManager = new UserManager();
-                User user = userManager.createFromResult(response.getResultObject());
-                userManager.logUser(user, this.getActivity());
+        // Prevent disconnected
+        if (response == null) {
+            String message = getResources().getString(R.string.network_not_available);
+            Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+        } else {
+            String message = "";
+            switch (response.getResultCode()) {
+                case ApiConst.CODE_OK:
 
-                message = getResources().getString(R.string.message_subcribed_success);
+                    UserManager userManager = new UserManager();
+                    User user = userManager.createFromResult(response.getResultObject());
+                    userManager.logUser(user, this.getActivity());
 
-                Toast.makeText(getActivity(), String.format(message, user.getFirstname()), Toast.LENGTH_LONG).show();
-                OnRegistrationFinish();
-                break;
-            case ApiConst.CODE_EMAIL_ALREADY_REGISTERED:
-                message = getResources().getString(R.string.message_subcribed_mail_already_registered);
+                    message = getResources().getString(R.string.message_subcribed_success);
 
-                Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-                break;
-            default:
-                message = ErrorFormatter.formatError(getActivity(), response.getResultCode());
-                Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-                break;
+                    Toast.makeText(getActivity(), String.format(message, user.getFirstname()), Toast.LENGTH_LONG).show();
+                    OnRegistrationFinish();
+                    break;
+                case ApiConst.CODE_EMAIL_ALREADY_REGISTERED:
+                    message = getResources().getString(R.string.message_subcribed_mail_already_registered);
+
+                    Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+                    break;
+                default:
+                    message = ErrorFormatter.formatError(getActivity(), response.getResultCode());
+                    Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+                    break;
+            }
         }
     }
 
@@ -205,6 +212,7 @@ public class SubscribeFragment extends Fragment implements ApiTask.IApiTask {
 
     public interface OnFragmentInteractionListener {
         void onClickLoginButton();
+
         void onRegistrationFinish();
     }
 }

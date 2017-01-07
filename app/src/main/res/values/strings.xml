@@ -57,6 +57,7 @@
     <!-- Permissions -->
     <string name="permission_internet">L\'application Shopping List a besoin d\'une connnexion internet.</string>
     <string name="permission_network_state">L\'application Shopping List a besoin de vérifier l\'état de votre connexion.</string>
+    <string name="network_not_available">Vous devez vous connecter à Internet pour utiliser l\'application.</string>
 
     <!-- Messages -->
     <string name="message_subcribed_success">Bienvenue %s !</string>
@@ -71,8 +72,5 @@
     <string name="message_product_successfully_remove">Votre produit a bien été supprimé.</string>
     <string name="message_app_error_occured">Une erreur est survenue (Code = %s)</string>
     <string name="message_app_no_internet">Vous ne semblez pas être connecté à internet.</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

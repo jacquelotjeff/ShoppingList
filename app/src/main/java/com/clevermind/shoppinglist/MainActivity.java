@@ -1,27 +1,19 @@
 package com.clevermind.shoppinglist;
 
 
-import android.Manifest;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.clevermind.shoppinglist.fragments.LoginFragment;
 import com.clevermind.shoppinglist.fragments.SubscribeFragment;
 import com.clevermind.shoppinglist.managers.UserManager;
-import com.clevermind.shoppinglist.models.User;
 
-public class MainActivity extends AppCompatActivity implements SubscribeFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener {
+public class MainActivity extends BaseActivity implements SubscribeFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,48 +21,7 @@ public class MainActivity extends AppCompatActivity implements SubscribeFragment
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Boolean permissionsVerified = true;
-
-        //Check network state permission
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_NETWORK_STATE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            permissionsVerified = false;
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.ACCESS_NETWORK_STATE)) {
-
-            } else {
-
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_NETWORK_STATE}, R.string.permission_network_state);
-
-            }
-
-        }
-
-        //Check internet permission
-        //Check network state permission
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.INTERNET)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            permissionsVerified = false;
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.INTERNET)) {
-
-            } else {
-
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.INTERNET}, R.string.permission_internet);
-
-            }
-
-        }
-
-        if (permissionsVerified) {
+        if (checkAccessNetwork()) {
             // By default add the login fragment
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             Fragment loginFragment = new LoginFragment();
@@ -86,8 +37,7 @@ public class MainActivity extends AppCompatActivity implements SubscribeFragment
         }
     }
 
-    public void startShoppingListActivity()
-    {
+    public void startShoppingListActivity() {
         Intent intent = new Intent(this, ShoppingListActivity.class);
         //Start the new activity as the root Task (Exit the app instead of go identification)
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

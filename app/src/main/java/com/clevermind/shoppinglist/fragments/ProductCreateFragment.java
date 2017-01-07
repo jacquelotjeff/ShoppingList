@@ -46,11 +46,13 @@ public class ProductCreateFragment extends Fragment implements ApiTask.IApiTask 
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View createView =  inflater.inflate(R.layout.fragment_product_type, container, false);
+        View createView = inflater.inflate(R.layout.fragment_product_type, container, false);
 
         shoppingList = (ShoppingList) getArguments().getSerializable(SHOPPING_LIST_CHOICED);
 
@@ -63,23 +65,23 @@ public class ProductCreateFragment extends Fragment implements ApiTask.IApiTask 
             @Override
             public void onClick(View view) {
 
-            EditText txtName = (EditText) getView().findViewById(R.id.txtBoxName);
-            String name = txtName.getText().toString();
+                EditText txtName = (EditText) getView().findViewById(R.id.txtBoxName);
+                String name = txtName.getText().toString();
 
-            EditText txtBoxQuantity = (EditText) getView().findViewById(R.id.txtBoxQuantity);
-            String quantity = txtBoxQuantity.getText().toString();
+                EditText txtBoxQuantity = (EditText) getView().findViewById(R.id.txtBoxQuantity);
+                String quantity = txtBoxQuantity.getText().toString();
 
-            EditText txtBoxPrice = (EditText) getView().findViewById(R.id.txtBoxPrice);
-            String price = txtBoxPrice.getText().toString();
+                EditText txtBoxPrice = (EditText) getView().findViewById(R.id.txtBoxPrice);
+                String price = txtBoxPrice.getText().toString();
 
-            boolean isValid = ProductValidator.validate(name, quantity, price, getView());
+                boolean isValid = ProductValidator.validate(name, quantity, price, getView());
 
-            if (isValid) {
-                Product product = new Product(name, Integer.parseInt(quantity), Float.parseFloat(price));
-               ApiTask apiRequest = new ApiTask();
-               apiRequest.setListener(ProductCreateFragment.this);
-               apiRequest.execute(buildRequestForCreate(product));
-            }
+                if (isValid) {
+                    Product product = new Product(name, Integer.parseInt(quantity), Float.parseFloat(price));
+                    ApiTask apiRequest = new ApiTask();
+                    apiRequest.setListener(ProductCreateFragment.this);
+                    apiRequest.execute(buildRequestForCreate(product));
+                }
             }
 
         });
@@ -87,13 +89,13 @@ public class ProductCreateFragment extends Fragment implements ApiTask.IApiTask 
         return createView;
     }
 
-    private Request buildRequestForCreate(Product product){
+    private Request buildRequestForCreate(Product product) {
 
         Request req = new Request();
         req.setMethod(Request.METHOD_GET);
         req.setUrl(ApiConst.URI_PRODUCT_CREATE);
 
-        HashMap<String, String > params = new HashMap<String, String>();
+        HashMap<String, String> params = new HashMap<String, String>();
         String token = new UserManager().getTokenUser(this.getActivity());
 
         params.put("token", token);
@@ -127,19 +129,25 @@ public class ProductCreateFragment extends Fragment implements ApiTask.IApiTask 
     @Override
     public void onApiFinished(ApiTask task, ApiResponse response) {
         String message = "";
-        switch (response.getResultCode()) {
-            case ApiConst.CODE_OK:
-                message = getResources().getString(R.string.message_product_successfully_created);
-                Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-                onClickListProductsButton();
 
-                break;
-            default:
-                message = ErrorFormatter.formatError(getActivity(), response.getResultCode());
-                Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-                break;
+        // Prevent disconnected
+        if (response == null) {
+            message = getResources().getString(R.string.network_not_available);
+            Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+        } else {
+            switch (response.getResultCode()) {
+                case ApiConst.CODE_OK:
+                    message = getResources().getString(R.string.message_product_successfully_created);
+                    Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+                    onClickListProductsButton();
+
+                    break;
+                default:
+                    message = ErrorFormatter.formatError(getActivity(), response.getResultCode());
+                    Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+                    break;
+            }
         }
-
     }
 
     public void onClickListProductsButton() {

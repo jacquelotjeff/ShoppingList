@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.clevermind.shoppinglist.fragments.ProductCreateFragment;
@@ -17,7 +16,7 @@ import com.clevermind.shoppinglist.fragments.ShoppingListShowFragment;
 import com.clevermind.shoppinglist.models.Product;
 import com.clevermind.shoppinglist.models.ShoppingList;
 
-public class ShoppingListActivity extends AppCompatActivity implements
+public class ShoppingListActivity extends BaseActivity implements
         ShoppingListFragment.OnFragmentInteractionListener,
         ShoppingListCreateFragment.OnFragmentInteractionListener,
         ShoppingListShowFragment.OnFragmentInteractionListener,
@@ -37,7 +36,7 @@ public class ShoppingListActivity extends AppCompatActivity implements
 
         setContentView(R.layout.activity_shopping_list);
 
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null && checkAccessNetwork()) {
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             Fragment shoppingListFragment = new ShoppingListFragment();
             ft.replace(R.id.fragmentContainer, shoppingListFragment, ShoppingListFragment.TAG);
