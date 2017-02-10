@@ -5,6 +5,7 @@
     <string name="app_main_name">Shopping List</string>
     <string name="app_main_welcome">Bienvenue sur Shopping List !</string>
     <string name="app_main_identification">Identification</string>
+    <string name="app_main_logout">Deconnexion</string>
     <string name="app_main_registration">Inscription</string>
 
     <!-- Shopping List -->
@@ -64,6 +65,7 @@
     <string name="message_subcribed_mail_already_registered">Cet e-mail est déjà enregistré.</string>
     <string name="message_login_success">Vous êtes maintenant connecté.</string>
     <string name="message_login_failed">Connexion échouée, veuillez vérifier vos identifiants.</string>
+    <string name="message_logout_success">Vous êtes maintenant déconnecté.</string>
     <string name="message_list_successfully_created">Votre liste a bien été crée.</string>
     <string name="message_list_successfully_edited">Votre liste a bien été éditée.</string>
     <string name="message_list_successfully_remove">Votre liste a bien été supprimée.</string>

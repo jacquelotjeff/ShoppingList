@@ -4,7 +4,10 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.clevermind.shoppinglist.fragments.ProductCreateFragment;
 import com.clevermind.shoppinglist.fragments.ProductEditFragment;
@@ -13,6 +16,7 @@ import com.clevermind.shoppinglist.fragments.ShoppingListCreateFragment;
 import com.clevermind.shoppinglist.fragments.ShoppingListEditFragment;
 import com.clevermind.shoppinglist.fragments.ShoppingListFragment;
 import com.clevermind.shoppinglist.fragments.ShoppingListShowFragment;
+import com.clevermind.shoppinglist.managers.UserManager;
 import com.clevermind.shoppinglist.models.Product;
 import com.clevermind.shoppinglist.models.ShoppingList;
 
@@ -53,6 +57,17 @@ public class ShoppingListActivity extends BaseActivity implements
         ft.replace(R.id.fragmentContainer, createListFragment);
         ft.addToBackStack(null);
         ft.commit();
+
+    }
+
+    @Override
+    public void onClickLogoutButton() {
+
+        new UserManager().removeTokenUser(this);
+        Toast.makeText(this, R.string.message_logout_success, Toast.LENGTH_SHORT);
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
 
     }
 

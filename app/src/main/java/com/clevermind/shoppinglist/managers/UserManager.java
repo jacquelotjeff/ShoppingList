@@ -28,6 +28,15 @@ public class UserManager extends ApiTask {
         return sharedPreferences.getString("token", "");
     }
 
+    public void removeTokenUser(Activity context) {
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences("SHOP_AUTH", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove("token");
+        editor.apply();
+
+    }
+
     public User createFromResult(JSONObject json){
 
         try {
