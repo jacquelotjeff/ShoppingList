@@ -43,6 +43,7 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
 
     public interface OnFragmentInteractionListener {
         void onClickCreateListButton();
+        void onClickLogoutButton();
         void onClickShowButton(ShoppingList shoppingList);
     }
 
@@ -159,6 +160,10 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
         mListener.onClickCreateListButton();
     }
 
+    public void onClickLogoutButton() {
+        mListener.onClickLogoutButton();
+    }
+
     public void onClickShowButton(ShoppingList shoppingList) {
         mListener.onClickShowButton(shoppingList);
     }
@@ -184,8 +189,14 @@ public class ShoppingListFragment extends Fragment implements ApiTask.IApiTask {
         switch (item.getItemId()) {
             case R.id.action_add:
                 onClickCreateListButton();
-            default:
-                return super.onOptionsItemSelected(item);
+                break;
+            case R.id.action_logout:
+                onClickLogoutButton();
+                break;
+
         }
+
+        return super.onOptionsItemSelected(item);
+
     }
 }

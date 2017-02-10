@@ -131,7 +131,6 @@ public class ShoppingListShowFragment extends Fragment implements ApiTask.IApiTa
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        // Ce switch aurait fonctionnait si JEFF avait mis des BREAKS !!!
         switch (item.getItemId()) {
             case R.id.action_delete:
                 deleteList(shoppingList);
